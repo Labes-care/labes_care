@@ -7,7 +7,7 @@ const isAuth = (requiredRole) => (req, res, next) => {
     return res.status(401).json({ error: 'Invalid bearer token' });
   }
 
-  const token = bearerToken.split(' ')[1];
+  const token = bearerToken.split(' ')[1]
 
   try {
     const payload = jwt.verify(token,process.env.SECRET_KEY);
