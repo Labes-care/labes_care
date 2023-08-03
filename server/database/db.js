@@ -5,7 +5,7 @@ const password=process.env.password||'root'
 const sequelize = new Sequelize('labescare', user, password, {
   host: 'localhost',
   dialect: 'mysql',
-  logging: false,
+  logging: false,                 
   sync:false,
 });
 
