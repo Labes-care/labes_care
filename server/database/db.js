@@ -17,4 +17,4 @@ sequelize.query("CREATE DATABASE IF NOT EXISTS `labescare`;") // Create the data
     sequelize.close();
   });
 console.log(user)
-module.exports = sequelize;
+module.exports = sequelize;        
