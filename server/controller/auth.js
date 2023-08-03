@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const AuthController = {
-  createUser: async (req, res) => {
+  createPatient: async (req, res) => {
     const { fullname,gender,birthday ,email, password,created_at,address} = req.body;
 
     try {

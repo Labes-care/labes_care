@@ -32,7 +32,7 @@ const Patient = sequelize.define('Patient', {
     allowNull: false,
   },
 });
-console.log(Doctor);
+
 
 
 module.exports = Patient;
