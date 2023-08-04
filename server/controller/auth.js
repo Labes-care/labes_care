@@ -72,7 +72,7 @@ console.log(newPatient)
     const { fullname,email, password,speciality, cin,certificate_img,phonenumber,address} = req.body;
 console.log(req.body);
 
-    const { fullname,email, password,speciality, cin,certificate_img,phonenumber,address} = req.body;
+
    
 
     try {
