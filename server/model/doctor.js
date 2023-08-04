@@ -44,10 +44,7 @@ const Doctor = sequelize.define('Doctor', {
   availability: {
     type: DataTypes.TINYINT,
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
+    defaultValue: 0,
   },
 });
 
