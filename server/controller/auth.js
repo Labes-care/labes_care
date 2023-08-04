@@ -67,14 +67,19 @@ console.log(newPatient)
 
 
   createDoctor: async (req, res) => {
+
+    
+    const { fullname,email, password,speciality, cin,certificate_img,phonenumber,address} = req.body;
+console.log(req.body);
+
     const { fullname,email, password,speciality, cin,certificate_img,phonenumber,address} = req.body;
    
+
     try {
       const existingdoctor = await doctor.findOne({ where: { email } });
       if (existingdoctor) {
         return res.status(409).json({ error: 'Email already registered' });
       }
-     
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newDoctor = await doctor.create({
@@ -87,7 +92,7 @@ console.log(newPatient)
         phonenumber,
         address,
       });
-     
+
 console.log(newDoctor)
       res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
@@ -99,7 +104,7 @@ console.log(newDoctor)
 
   DoctorLogin: async (req, res) => {
     const { email, password } = req.body;
-console.log(req.body);
+
     try {
       const Doctor = await doctor.findOne({ where: { email } });
       if (!Doctor) {
