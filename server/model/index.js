@@ -1,3 +1,4 @@
+
 const sequelize = require('../database/db');
 
 const admin = require ('./admin')

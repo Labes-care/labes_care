@@ -1,6 +1,6 @@
-const router = require("epress").Router();
-const{getAllDoctors} = require ('../controller/Doctor/doctor');
+const router = require("express").Router();
+const DoctorController = require ('../controller/Doctor/doctor')
 
 
-router.get("/AllDoctors",getAllDoctors) ;
+router.get("/allDoctors",DoctorController.getAllDoctors) ;
 module.exports = router ;
