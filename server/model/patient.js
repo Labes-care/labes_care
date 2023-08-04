@@ -23,16 +23,12 @@ const Patient = sequelize.define('Patient', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
   address: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 });
-console.log(Doctor);
+
 
 
 module.exports = Patient;
