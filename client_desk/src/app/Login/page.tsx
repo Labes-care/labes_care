@@ -37,37 +37,29 @@ function Copyright(props: any) {
   );
 }
 
-
 const defaultTheme = createTheme();
 
 export default function Page() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userType, setUserType] = useState('doctor');
   
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       try {
-        const response = await axios.post('http://localhost:5000/auth/login', {
+        const response = await axios.post('http://localhost:5000/auth/doctor/login', {
           email,
           password,
-          userType,
         });
   
         if (response.status === 200) {
-          const { token, userType } = response.data;
+          const { token } = response.data;
   
           // Store the token in a cookie
           Cookies.set('token', token);
-          Cookies.set('userType', userType)
   
           console.log('Login successful');
-          if (userType === 'doctor') {
-            window.location.href = '/doctor'
-          } else if (userType === 'patient') {
-            window.location.href = '/patient'
-          }
+          
         } else {
           console.log('Login failed');
         }
@@ -102,19 +94,6 @@ export default function Page() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">User Type</FormLabel>
-              <RadioGroup
-                row
-                aria-label="userType"
-                name="userType"
-                value={userType}
-                onChange={(e) => setUserType(e.target.value)}
-              >
-                <FormControlLabel value="doctor" control={<Radio />} label="Doctor" />
-                <FormControlLabel value="patient" control={<Radio />} label="Patient" />
-              </RadioGroup>
-            </FormControl>
             <TextField
               margin="normal"
               required
@@ -158,7 +137,7 @@ export default function Page() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="signUp" variant="body2">
+                <Link href="DoctorSignUp" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -170,4 +149,3 @@ export default function Page() {
     </ThemeProvider>
   )
 }
-
