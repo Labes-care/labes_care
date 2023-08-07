@@ -101,20 +101,6 @@ export default function Page() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      fullname: data.get('fullname'),
-      email: data.get('email'),
-      password: data.get('password'),
-      speciality: data.get('speciality'),
-      cin: data.get('cin'),
-      certificate_img: data.get('certificate_img'),
-      phonenumber: data.get('phonenumber'),
-      address: data.get('address'),
-    });
-  };
 
   return (
     
