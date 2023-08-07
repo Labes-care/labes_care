@@ -7,12 +7,16 @@ const PORT = process.env.PORT||5000
 const cors = require("cors");
 
 const authRouter = require('./router/auth');
+const doctorRouter = require('./router/doctor')
+const doctorPofileRouter = require('./router/doctorProfile')
 
 
 app.use(express.json());
 app.use(cors()); 
 
 app.use('/auth', authRouter);
+app.use("/doctors",doctorRouter)
+app.use("/doctorProfile",doctorPofileRouter)
 
 
 sequelize.authenticate()

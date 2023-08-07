@@ -1,14 +1,8 @@
-const {doctor} = require ('../../model/doctor');
-  Module.exports= {
-    // AddDoctors(res,req)=>{
-    //     doctor.create({
+const doctor = require ('../../model/doctor');
+  module.exports= {
 
-    //     })
-    // }
-    // ,
     getAllDoctors(req,res){
-        doctor
-        .findAll()
+        doctor.findAll({})
         .then((doctors)=>{
             res.status(200).json(doctors);
         })
@@ -16,5 +10,5 @@ const {doctor} = require ('../../model/doctor');
             console.error(err);
             res.status(500).json({err:'No doctor found'})
         })
-    }
+      }
 }
