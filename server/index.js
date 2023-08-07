@@ -15,11 +15,6 @@ const auth = require ('./router/auth')
 
 
 
-
-
-
-
-
 app.use(express.urlencoded({extended:true}))
 
 app.use(express.json());
