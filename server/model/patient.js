@@ -27,6 +27,14 @@ const Patient = sequelize.define('Patient', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  profile_img:{
+    type: DataTypes.STRING(300),
+    allowNull: false
+  },
+  cover_img:{
+    type: DataTypes.STRING(300),
+    allowNull: false
+  }
 });
 
 

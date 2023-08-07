@@ -25,7 +25,7 @@ const Doctor = sequelize.define('Doctor', {
     allowNull: false,
   },
   certificate_img: {
-    type: DataTypes.BLOB,
+    type: DataTypes.STRING(300),
     allowNull: false,
   },
   phonenumber: {
@@ -35,6 +35,14 @@ const Doctor = sequelize.define('Doctor', {
   address: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  profile_img:{
+    type: DataTypes.STRING(300),
+    allowNull: false
+  },
+  cover_img:{
+    type: DataTypes.STRING(300),
+    allowNull: false
   },
   status: {
     type: DataTypes.TINYINT,
