@@ -1,22 +1,34 @@
 const express = require("express");
 const sequelize = require('./database/db');
 const db = require('./model/index')
+
+
+
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT||5000
 const cors = require("cors");
 
-const authRouter = require('./router/auth');
-const doctorRouter = require('./router/doctor')
+
+
 const doctorPofileRouter = require('./router/doctorProfile')
+const doctor = require ('./router/doctor')
+const auth = require ('./router/auth')
 
 
+
+
+app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 app.use(cors()); 
 
-app.use('/auth', authRouter);
-app.use("/doctors",doctorRouter)
+
+
 app.use("/doctorProfile",doctorPofileRouter)
+app.use("/api/doctors",doctor)
+app.use("/auth",auth)
+
+
 
 
 sequelize.authenticate()

@@ -10,7 +10,7 @@ const sequelize = new Sequelize('labescare', user, password, {
 });
 
 sequelize.query("CREATE DATABASE IF NOT EXISTS `labescare`;") // Create the database if it doesn't exist
-  .then(() => {
+  .then(() => { console.log("database connetcted")
   })
   .catch((error) => {
     console.error('Unable to create the database:', error);

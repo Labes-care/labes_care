@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const{getAllDoctors} = require ('../controller/Doctor/doctor');
+
+const DoctorController = require ('../controller/Doctor/doctor')
 
 
-router.get("/AllDoctors",getAllDoctors) ;
+router.get("/allDoctors",DoctorController.getAllDoctors) ;
 
 module.exports = router ;
