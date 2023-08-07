@@ -59,24 +59,14 @@ const HomeTabs = () => {
         }}
       />
       <Tab.Screen
-        name="parameter"
-        component={Parameter}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <CustomTabBarIcon name="gear" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="apointementtt"
         component={Apointement}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <CustomTabBarIcon name="calendar" color={color} size={size} />
-          ),
-        }}
+            ),
+          }}
       />
        <Tab.Screen
         name="Chat"
@@ -85,9 +75,19 @@ const HomeTabs = () => {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <CustomTabBarIcon name="comment" color={color} size={size} />
-          ),
-        }}
+            ),
+          }}
       />
+          <Tab.Screen
+            name="parameter"
+            component={Parameter}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <CustomTabBarIcon name="gear" color={color} size={size} />
+              ),
+            }}
+          />
     </Tab.Navigator>
   );
 };
