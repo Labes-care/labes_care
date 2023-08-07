@@ -1,4 +1,5 @@
 
+
 const doctor = require ('../../model/doctor');
    const DoctorController= {
         async getAllDoctors(req, res) {
@@ -13,6 +14,7 @@ const doctor = require ('../../model/doctor');
         };
 
         module.exports=DoctorController
+
 
 
 

@@ -1,27 +1,171 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.profile-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #e0e5e93d;
+  box-shadow: 0px 2px 4px rgba(119, 120, 168, 0.1);
+  margin-top: 5%;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Cover image */
+.cover {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+  width: 100%;
+  border-radius: 1%;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Profile section */
+.profile {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  background-color: #eee;
+}
+.profile-info:hover{
+  background-color: #b5c5d4a0;
+
+}
+
+
+
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 14px;
+  color: #555555;
+  margin-bottom: 3px;
+}
+
+
+.doctor-profile {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 5%;
+}
+
+
+.profile-pic {
+  
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 20px;
+  position: relative;
+ 
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #c7daf0cd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+.user-info {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+ 
+}
+
+.user-info:hover {
+  background-color: #eee;
+}
+
+.user-info label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+
+.user-info input[type="text"],
+.user-info textarea,
+.user-info select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.user-info input[type="text"]:focus,
+.user-info textarea:focus,
+.user-info select:focus {
+  border-color: #007BFF;
+}
+
+.user-info textarea {
+  resize: vertical;
+}
+
+.user-info input[type="text"]::placeholder,
+.user-info textarea::placeholder,
+.user-info select option:first-child {
+  color: #999;
+}
+
+.update-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #0056b3;
 }
