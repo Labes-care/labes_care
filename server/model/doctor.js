@@ -38,11 +38,11 @@ const Doctor = sequelize.define('Doctor', {
   },
   profile_img:{
     type: DataTypes.STRING(300),
-    allowNull: false
+    allowNull: true
   },
   cover_img:{
     type: DataTypes.STRING(300),
-    allowNull: false
+    allowNull: true
   },
   status: {
     type: DataTypes.TINYINT,
@@ -53,6 +53,10 @@ const Doctor = sequelize.define('Doctor', {
     type: DataTypes.TINYINT,
     allowNull: false,
     defaultValue: 0,
+  },
+  approvalStatus: {
+    type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+    defaultValue: 'pending',
   },
 });
 

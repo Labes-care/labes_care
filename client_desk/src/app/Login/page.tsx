@@ -18,6 +18,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { useRouter } from 'next/navigation';
+
 
 
 import Cookies from 'js-cookie';
@@ -43,8 +45,13 @@ export default function Page() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const router = useRouter();
   
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      console.log("qsdfghj");
+      
       event.preventDefault();
       try {
         const response = await axios.post('http://localhost:5000/auth/doctor/login', {
@@ -53,13 +60,20 @@ export default function Page() {
         });
   
         if (response.status === 200) {
-          const { token } = response.data;
+          const { id,token } = response.data;
   
           // Store the token in a cookie
           Cookies.set('token', token);
   
           console.log('Login successful');
-          
+          if (id) {
+            router.push(`/doctorProfile/${id}`);
+            // router.push('/DoctorSignUp')
+            console.log(id);
+            
+          } else {
+            console.log('User id is undefined');
+          }
         } else {
           console.log('Login failed');
         }
@@ -74,7 +88,7 @@ export default function Page() {
       const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
       };
-
+console.log(email,"email")
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -94,6 +108,7 @@ export default function Page() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {/* <button onClick={()=>{handleSubmit()}}>post</button> */}
             <TextField
               margin="normal"
               required
