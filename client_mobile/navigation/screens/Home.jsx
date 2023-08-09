@@ -4,80 +4,112 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const CircleItem = ({ imageUri, isLighten }) => (
-  <View style={[styles.circle, isLighten && styles.lightenCircle]}>
-    <Image source={{ uri: imageUri }} style={styles.circleImage} />
-    {isLighten && <View style={styles.neonOverlay} />}
-  </View>
-);
-
-const RectangleItem = ({ imageUri, title }) => (
-  <View style={styles.rectangleItem}>
-    <Image source={{ uri: imageUri }} style={styles.rectangleImage} />
-    <Text style={styles.rectangleTitle}>{title}</Text>
-  </View>
-);
-
-const BottomRectangleCard = ({ data }) => (
-  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.bottomRectangleList}>
-    {data.map(item => (
-      <RectangleItem key={item.id} imageUri={item.imageUri} title={item.title} />
-    ))}
-  </ScrollView>
-);
-
 const HomeScreen = () => {
   const profileImageUri = 'https://i.pinimg.com/474x/6d/0e/05/6d0e052a59840858186a37ba74de24b3.jpg';
 
   const data = [
+    { id: '1', imageUri: require('../screens/models/22.png'), isLighten: false },
+    { id: '2', imageUri: require('../screens/models/33.png'), isLighten: false },
+    { id: '3', imageUri: require('../screens/models/44.png'), isLighten: false },
+    { id: '4', imageUri: require('../screens/models/55.png'), isLighten: false },
+    { id: '5', imageUri: require('../screens/models/66.png'), isLighten: false },
+    { id: '6', imageUri: require('../screens/models/77.png'), isLighten: false },
+    { id: '7', imageUri: require('../screens/models/88.png'), isLighten: false },
+    { id: '8', imageUri: require('../screens/models/99.png'), isLighten: false },
+    { id: '9', imageUri: require('../screens/models/100.png'), isLighten: false },
+    { id: '10', imageUri: require('../screens/models/111.png'), isLighten: false },
+    { id: '11', imageUri: require('../screens/models/112.png'), isLighten: false },
+    { id: '12', imageUri: require('../screens/models/blood.png'), isLighten: false },
+  ];
+  const data1 = [
     { id: '1', imageUri: 'https://via.placeholder.com/150', isLighten: false },
     { id: '2', imageUri: 'https://via.placeholder.com/150', isLighten: false },
     { id: '3', imageUri: 'https://via.placeholder.com/150', isLighten: false },
     { id: '4', imageUri: 'https://via.placeholder.com/150', isLighten: false },
   ];
 
+  const CircleItem = ({ imageUri, isLighten }) => (
+    <View style={[styles.circle, isLighten && styles.lightenCircle]}>
+      <Image source={imageUri} style={styles.circleImage} />
+      {isLighten && <View style={styles.neonOverlay} />}
+    </View>
+  );
+
   const [lightenIndex, setLightenIndex] = useState(-1);
 
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#001F3F', '#000000']} style={styles.gradient}>
-        <View style={styles.header}>
-          <Text style={styles.greetingText}>Hi, Mohamed!</Text>
-          <View style={styles.profileImageContainer}>
-            <Image source={{ uri: profileImageUri }} style={styles.profileImage} />
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.header}>
+            <Text style={styles.greetingText}>
+              Hi, Mohamed! {'  '}
+              <Image source={require('../screens/waving-hand_1f44b.png')} style={styles.greetingImage} /> {' '}
+            </Text>
+
+            <View style={styles.profileImageContainer}>
+              <Image source={{ uri: profileImageUri }} style={styles.profileImage} />
+            </View>
           </View>
-        </View>
 
-        <Text style={styles.messageText}>Keep taking care of your health</Text>
+          <Text style={styles.messageText}>Keep taking care of your health</Text>
 
-        <BlurView intensity={80} tint="light" style={styles.blurContainer}>
-          <View style={styles.searchBarContainer}>
-            <Icon name="search" size={20} color="#FFFFFF" style={styles.searchIcon} />
-            <TextInput
-              style={styles.searchBar}
-              placeholder="Search anything here ..."
-              placeholderTextColor="#FFFFFF"
-            />
+          <BlurView intensity={80} tint="light" style={styles.blurContainer}>
+            <View style={styles.searchBarContainer}>
+              <Icon name="search" size={20} color="#FFFFFF" style={styles.searchIcon} />
+              <TextInput
+                style={styles.searchBar}
+                placeholder="Search anything here ..."
+                placeholderTextColor="#FFFFFF"
+              />
+            </View>
+          </BlurView>
+
+          <FlatList
+            horizontal
+            data={data}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity onPress={() => setLightenIndex(index)}>
+                <CircleItem imageUri={item.imageUri} isLighten={index === lightenIndex} />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.circleList}
+          />
+
+          <TouchableOpacity style={styles.seeAllButton}>
+            <Text style={styles.seeAllText}>See All</Text>
+          </TouchableOpacity>
+
+          <FlatList
+            horizontal
+            data={data1}
+            renderItem={({ item }) => (
+              <View style={styles.rectangle}>
+                <Image source={{ uri: item.imageUri }} style={styles.rectangleImage} />
+              </View>
+            )}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.rectangleList}
+          />
+
+          <View style={styles.textImageContainer}>
+            <Text style={styles.text1}>
+              <Image source={require('../screens/face-with-medical-mask_1f637.png')} style={styles.textImage} /> {' '}
+              Categories
+            </Text>
+
+            <Image source={require('../screens/1f489.png')} style={styles.anotherTextImage} />
+            <Text style={styles.anotherText}>
+              My Doctors
+            </Text>
           </View>
-        </BlurView>
 
-        <FlatList
-          horizontal
-          data={data}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity onPress={() => setLightenIndex(index)}>
-              <CircleItem imageUri={item.imageUri} isLighten={index === lightenIndex} />
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.circleList}
-        />
+          <TouchableOpacity style={styles.rect}>
+            <Text style={styles.seeAllText}>See All</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.seeAllButton}>
-          <Text style={styles.seeAllText}>See All</Text>
-        </TouchableOpacity>
-
-        <BottomRectangleCard data={data} />
+        </ScrollView>
       </LinearGradient>
     </View>
   );
@@ -89,6 +121,8 @@ const styles = StyleSheet.create({
   },
   gradient: {
     flex: 1,
+  },
+  scrollContent: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -99,16 +133,14 @@ const styles = StyleSheet.create({
   },
   greetingText: {
     color: '#FFFFFF',
-    fontSize: 16,
-    marginRight: 10,
-    right: 100,
+    fontSize: 19,
+    marginRight: 158,
   },
   profileImageContainer: {
     width: 40,
     height: 40,
     borderRadius: 20,
     overflow: 'hidden',
-    left: 100,
   },
   profileImage: {
     width: '100%',
@@ -117,15 +149,14 @@ const styles = StyleSheet.create({
   messageText: {
     color: '#FFFFFF',
     fontSize: 40,
-    marginTop: 50,
+    marginTop: 35,
   },
   blurContainer: {
-    position: 'absolute',
-    bottom: 40,
     width: '90%',
     borderRadius: 20,
     overflow: 'hidden',
-    marginBottom: 380,
+    marginTop: 50,
+    bottom: 10,
   },
   searchBarContainer: {
     flexDirection: 'row',
@@ -144,14 +175,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 30,
     paddingVertical: 0,
-    paddingHorizontal: 11,
+    paddingHorizontal: 10,
   },
   circleList: {
-    marginTop: 200,
-    marginBottom: 30,
+    marginTop: 80,
+    marginBottom: 50,
   },
   circle: {
-    position: 'relative', 
+    position: 'relative',
     width: 80,
     height: 80,
     borderRadius: 40,
@@ -161,67 +192,112 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lightenCircle: {
-    backgroundColor: 'blue',
+    backgroundColor: '#80D8FF',
   },
   circleImage: {
-    width: 75,
-    height: 75,
+    width: 70,
+    height: 70,
     borderRadius: 35,
   },
   neonOverlay: {
     position: 'absolute',
-    top: -1,
-    left: -4,
-    right: -4,
-    bottom: -4,
-    backgroundColor: 'rgba(0, 120, 255, 0.8)', // Bright blue color with opacity
-    opacity: 0.9, // Adjust the opacity as needed
-    borderRadius: 62,
-    shadowColor: 'rgba(0, 120, 255, 0.8)', // Bright blue color with opacity
-    shadowOpacity: 0.2,
+    top: 0,
+    left: -8,
+    right: -8,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 120, 255, 0.8)',
+    opacity: 0.6,
+    borderRadius: 40,
+    shadowColor: 'rgba(0, 120, 255, 0.8)',
+    shadowOpacity: 0.9,
     shadowRadius: 15,
     shadowOffset: {
       width: 0,
       height: 0,
     },
   },
-  seeAllButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    bottom: 340,
-    left: 150,
+  rectangleList: {
+    marginTop: 5,
+    marginBottom: 30,
+  },
+  rectangle: {
+    width: 120,
+    height: 150,
+    backgroundColor: 'transparent',
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rectangleImage: {
+    width: 130,
+    height: 150,
+    borderRadius: 30,
   },
   seeAllText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
+    bottom: 170,
+    left: 140,
   },
-  bottomRectangleList: {
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+  rect: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+    bottom: 34,
+    left: 3,
   },
-  rectangleItem: {
+  textImageContainer: {
+    alignItems: 'center',
+    marginTop: -60,
+    bottom: 323,
+    right: 110,
+  },
+  text1: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 10,
-    marginBottom: 50,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    elevation: 3,
-    position: 'absolute',
-    backgroundColor: 'white',
-    top: 30,
   },
-  rectangleImage: {
-    width: 20,
-    height: 20,
-    borderRadius: 8,
+  textImage: {
+    width: 24,
+    height: 24,
     marginRight: 10,
-    margintop : 50,
+    resizeMode: 'contain',
   },
-  rectangleTitle: {
-    fontSize: 16,
+  textImageContainer: {
+    alignItems: 'center',
+    marginTop: -60,
+    bottom: 323,
+    right: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  anotherTextImage: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+    resizeMode: 'contain',
+    top: 150,
+    right: 153,
+  },
+  anotherText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    top: 148,
+    right: 139,
+  },
+  greetingImage: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
+    resizeMode: 'contain',
   },
 });
 
