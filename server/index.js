@@ -4,16 +4,22 @@ const db = require('./model/index')
 
 
 
+
 const app = express();
 require('dotenv').config();
-const PORT = process.env.PORT||5000
+const PORT = process.env.PORT||3003
 const cors = require("cors");
+
+
+
 
 
 
 const doctorPofileRouter = require('./router/doctorProfile')
 const doctor = require ('./router/doctor')
 const auth = require ('./router/auth')
+const DoProfile = require('./router/DoProfile')
+const admin = require('./router/admin')
 
 
 
@@ -27,7 +33,10 @@ app.use(cors());
 app.use("/doctorProfile",doctorPofileRouter)
 app.use("/api/doctors",doctor)
 app.use("/auth",auth)
+app.use("/admin",admin)
 
+
+app.use("/",DoProfile)
 
 
 
