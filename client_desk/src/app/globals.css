@@ -169,3 +169,81 @@ p {
 .update-button:hover {
   background-color: #0056b3;
 }
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600');
+
+
+.edit {
+  background: #6d8baa;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 25px;
+  height: 40px;
+  line-height: 40px;
+  outline: none;
+  padding: 0;
+  padding-right: 10px;
+  position: relative;
+  -webkit-transition: background .4s;
+  transition: background .4s;
+  margin-left: 5% ;
+}
+.edit:hover {
+  background: #77a7bd;
+}
+.edit span {
+  display: inline-block;
+  float: left;
+}
+.edit .edit-icon {
+  height: 40px;
+  position: relative;
+  width: 40px;
+}
+.edit .edit-icon:before {
+  border: 3px solid #fff;
+  border-radius: 3px;
+  content: "";
+  display: inline-block;
+  height: 50%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  transform: translate(-50%, -50%);
+}
+.edit .edit-icon:after { 
+  background: #b9d1d7;
+  border: 2px #fff solid;
+  border-bottom-left-radius: 5px 15px;
+  border-bottom-right-radius: 5px 15px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px; 
+  box-shadow: 0 0 0 2px  #b9d1d7;
+  content: "";
+  display: inline-block;
+  height: 55%;
+  position: absolute;
+  top: 7%;
+  left: 45%;
+  width: 6px; 
+  transform: translate(0, 0) rotate(45deg);
+  transform-origin: 50% 75%;
+  transition: background .4s, box-shadow .4s;
+}
+.edit:hover span:after {
+  background: #5b737e;
+  box-shadow: 0 0 0 2px #5b737e;
+  animation: wiggle .25s 3 linear;
+}
+
+@keyframes wiggle {
+  0% {transform: translate(0,0) rotate(45deg);}
+  25% {transform: translate(0,0) rotate(25deg);}
+  50% {transform: translate(0,0) rotate(45deg);}
+  75% {transform: translate(0,0) rotate(65deg);}
+  100% {transform: translate(0,0) rotate(45deg);}
+}

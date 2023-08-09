@@ -13,6 +13,7 @@ router.post("/patient/signup", AuthController.createPatient);
 router.post("/doctor/signup", AuthController.createDoctor);
 
 
+
 router.post("/patient/login",AuthController.PatientLogin);
 router.post("/doctor/login",AuthController.DoctorLogin);
 
@@ -68,6 +69,10 @@ router.post('/doctors', upload.single('certificate_img'), async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
+
+router.post("/patient/login",AuthController.PatientLogin);
+router.post("/doctor/login",AuthController.DoctorLogin);
+
 
 
 module.exports = router

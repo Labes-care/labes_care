@@ -46,7 +46,9 @@ export default function Page() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+
     const router = useRouter();
+
   
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -60,12 +62,17 @@ export default function Page() {
         });
   
         if (response.status === 200) {
+
           const { id,token } = response.data;
+
+          const { token } = response.data;
+
   
           // Store the token in a cookie
           Cookies.set('token', token);
   
           console.log('Login successful');
+
           if (id) {
             router.push(`/doctorProfile/${id}`);
             // router.push('/DoctorSignUp')
@@ -74,6 +81,9 @@ export default function Page() {
           } else {
             console.log('User id is undefined');
           }
+
+          
+
         } else {
           console.log('Login failed');
         }
@@ -108,7 +118,9 @@ console.log(email,"email")
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+
           {/* <button onClick={()=>{handleSubmit()}}>post</button> */}
+
             <TextField
               margin="normal"
               required

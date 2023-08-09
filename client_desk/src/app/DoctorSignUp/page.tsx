@@ -145,6 +145,7 @@ export default function Page({ doctorId }: Props) {
     return step === 2;
   };
 
+
   return (
     <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
