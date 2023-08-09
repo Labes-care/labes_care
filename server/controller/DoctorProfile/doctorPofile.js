@@ -13,8 +13,8 @@ const doctor = require ('../../model/doctor');
     },
     getOneDoctor(req,res){
      doctor.findOne({where: { id: req.params.id } })
-     .then((doctors)=>{
-        res.status(200).json(doctors);
+     .then((doctor)=>{
+        res.status(200).json(doctor);
     })
     .catch((err)=>{
         console.error(err);

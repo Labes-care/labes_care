@@ -116,7 +116,7 @@ console.log(newDoctor)
         
       });
      
-      res.json({ token });
+      res.json({ id: Doctor.id, token });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });

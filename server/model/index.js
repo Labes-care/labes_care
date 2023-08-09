@@ -6,7 +6,7 @@ const doctor = require('./doctor');
 const patient = require('./patient');
 const payment = require('./payment');
 const DoctorsPatients = require('./DoctorsPatients');
-const Login = require ('./Login')
+
 
 doctor.hasMany(patient, { as: 'patients', foreignKey: 'doctors_iddoctors' })
 doctor.hasMany(payment, { as: 'payments', foreignKey: 'doctors_iddoctors' });
