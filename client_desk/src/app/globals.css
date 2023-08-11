@@ -1,3 +1,7 @@
+.doc-container{
+  background-color: #e7eaf66e;
+}
+
 .profile-container {
   width: 80%;
   margin: 0 auto;
@@ -46,6 +50,12 @@
   object-fit: cover;
 }
 
+.profilepic img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .profile-info {
   flex: 1;
   padding: 20px;
@@ -68,12 +78,13 @@ h1 {
   font-size: 24px;
   margin-bottom: 5px;
   color: #555555;
+ 
 }
 
 p {
   font-size: 14px;
   color: #555555;
-  margin-bottom: 3px;
+  
 }
 
 
@@ -179,9 +190,9 @@ p {
  
 }
 
-.user-info:hover {
+/* .user-info:hover {
   background-color: #eee;
-}
+} */
 
 .user-info label {
   /* display: block; */
@@ -194,7 +205,7 @@ p {
 .user-info input[type="text"],
 .user-info textarea,
 .user-info select {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -219,10 +230,10 @@ p {
   color: #999;
 }
 
-/* .update-button {
+.changes {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #007BFF;
+  background-color: #669ad2;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -231,9 +242,27 @@ p {
   transition: background-color 0.3s ease;
 }
 
-.update-button:hover {
-  background-color: #0056b3;
-} */
+.changes:hover {
+  background-color: #7ebbfc;
+}
+
+.saveCover {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #669ad2;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 15%;
+  margin-bottom: 1%;
+}
+
+.saveCover:hover {
+  background-color: #7ebbfc;
+}
 
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:600');
@@ -331,14 +360,21 @@ p {
 
 }
 
+.coverpic img{
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .card-profile {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
   margin: 10px;
   max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.395);
+  background-color: #ffffff;
   
 }
 
@@ -376,7 +412,8 @@ p {
   padding: 20px;
   margin: 10px;
   max-width: 800%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.395);
+  background-color: #ffffff;
 }
 
 
@@ -422,7 +459,8 @@ p {
   padding: 20px;
   margin: 10px;
   max-width: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.395);
+  background-color: #ffffff;
 
 }
 
@@ -433,3 +471,13 @@ p {
   
   margin: 80px;
 }
+
+.info{
+  display: grid;
+  justify-content: start;
+  grid-template-columns: repeat(2, 300px);
+  
+  margin: 50px;
+}
+
+

@@ -58,6 +58,22 @@ const Doctor = sequelize.define('Doctor', {
     type: DataTypes.ENUM('pending', 'approved', 'rejected'),
     defaultValue: 'pending',
   },
+  biography:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  },
+  education:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  },
+  experience:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  },
+  skills:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  }
 });
 
 
