@@ -1,0 +1,219 @@
+body {
+    
+    background-size: cover; 
+    background-image: url(https://img.freepik.com/free-photo/blurred-abstract-background-interior-view-looking-out-toward-empty-office-lobby-entrance-doors-glass-curtain-wall-with-frame_1339-6364.jpg?w=996&t=st=1691896734~exp=1691897334~hmac=f0557d2220ed8d05236109d680c25e8fdca94d09bf89dd232ba67caf90088013);
+  }
+  
+
+  /* /////////////////////////////////////////////////// */
+  /* * {
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+} */
+
+
+  
+  
+  
+  figure {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .image-1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url(  https://thumbs.dreamstime.com/z/double-exposure-smart-medical-doctor-working-operating-room-as-concept-43619820.jpg?w=992
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    transition: all 1s ease-in-out;
+  }
+  .image-2 {
+    display: inline-block;
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    background-image: url(https://thumbs.dreamstime.com/z/global-medical-network-hands-doctor-91813262.jpg?w=992);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 1s ease-in-out;
+  }
+  
+  figure:hover .image-2 {
+    opacity: 1;
+    transform: translate(0) !important;
+  }
+  
+  figure:hover + .text {
+    color: white;
+  }
+  
+  .image-2:nth-child(2) {
+    background-position: 0px 0px;
+    left: 0px;
+    transform: translateY(60px);
+  }
+  
+  .image-2:nth-child(3) {
+    background-position: -50px 0;
+    left: 50px;
+    transform: translateY(-60px);
+  }
+  
+  .image-2:nth-child(4) {
+    background-position: -100px 0;
+    left: 100px;
+    transform: translateY(60px);
+  }
+  
+  .image-2:nth-child(5) {
+    left: 150px;
+    background-position: -150px 0;
+    transform: translateY(-60px);
+  }
+  
+  .image-2:nth-child(6) {
+    left: 200px;
+    background-position: -200px 0;
+    transform: translateY(60px);
+  }
+  
+  .image-2:nth-child(7) {
+    left: 250px;
+    background-position: -250px 0;
+    transform: translateY(-60px);
+  }
+  
+  .image-2:nth-child(8) {
+    left: 300px;
+    background-position: -300px 0;
+    transform: translateY(60px);
+  }
+  
+  .image-2:nth-child(9) {
+    left: 350px;
+    background-position: -350px 0;
+    transform: translateY(-60px);
+  }
+  .image-2:nth-child(10) {
+    left: 400px;
+    background-position: -400px 0;
+    transform: translateY(60px);
+  }
+  .image-2:nth-child(11) {
+    left: 450px;
+    background-position: -450px 0;
+    transform: translateY(-60px);
+  }
+  .image-2:nth-child(12) {
+    left: 500px;
+    background-position: -500px 0;
+    transform: translateY(60px);
+  }
+  .image-2:nth-child(13) {
+    left: 550px;
+    background-position: -550px 0;
+    transform: translateY(-60px);
+  }
+  .image-2:nth-child(14) {
+    left: 600px;
+    background-position: -600px 0;
+    transform: translateY(60px);
+  }
+  .image-2:nth-child(14) {
+    left: 650px;
+    background-position: -650px 0;
+    transform: translateY(-60px);
+  }
+ 
+
+
+ 
+  
+  .center-container {
+    position: absolute;
+    top: 40%;
+    left: 137mm;
+    width: 816px;
+    height: 515px;
+    margin-top: -200px;
+    margin-left: -200px;
+    border-radius: 1%;
+    box-shadow: 4px 8px 16px 0 #007bff17;
+    background-color: #c7daf02b;
+   border: 8px
+
+  }
+  
+  .float-child {
+    flex: 1;
+    padding: 0px;
+    
+  }
+  
+  .float-child1 {
+    background-color: #111;
+    color: white;
+  }
+  
+  .float-child2 {
+    background-color:#c7daf000 ;
+    position: absolute;
+    top: 55mm;
+    left: 161mm;
+    width: 400px;
+    height: 500px;
+    margin-top: -200px;
+    margin-left: -200px;
+    border-radius: 1%;
+    
+  }
+  
+  .frame {
+    position: absolute;
+    top: 55mm;
+    left: 55mm;
+    width: 400px;
+    height: 500px;
+    margin-top: -200px;
+    margin-left: -200px;
+    border-radius: 1%;
+    box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: #fff;
+    color: #333;
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .copyright{
+    position: absolute;
+    top: 142mm;
+    left: -29mm;
+  }
+
+  input[type=file]::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: #084cdf;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+  }
+  
+  input[type=file]::file-selector-button:hover {
+    background: #0d45a5;
+  }
+
+  

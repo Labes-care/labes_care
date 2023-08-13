@@ -21,7 +21,7 @@ const Doctor = sequelize.define('Doctor', {
     allowNull: false,
   },
   cin: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(300),
     allowNull: false,
   },
   certificate_img: {
@@ -38,11 +38,11 @@ const Doctor = sequelize.define('Doctor', {
   },
   profile_img:{
     type: DataTypes.STRING(300),
-    allowNull: false
+    allowNull: true
   },
   cover_img:{
     type: DataTypes.STRING(300),
-    allowNull: false
+    allowNull: true
   },
   status: {
     type: DataTypes.TINYINT,
@@ -54,6 +54,26 @@ const Doctor = sequelize.define('Doctor', {
     allowNull: false,
     defaultValue: 0, 
   },
+  approvalStatus: {
+    type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+    defaultValue: 'pending',
+  },
+  biography:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  },
+  education:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  },
+  experience:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  },
+  skills:{
+    type: DataTypes.STRING(2000),
+    allowNull: true
+  }
 });
 
 
