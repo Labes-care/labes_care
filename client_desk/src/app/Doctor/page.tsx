@@ -8,6 +8,9 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { Rate } from 'antd';
+import { Pagination } from 'antd';
+
 interface DoctorType {
     id: number;
     image:string;
@@ -73,7 +76,7 @@ sx={{
         image="https://images.theconversation.com/files/304957/original/file-20191203-66986-im7o5.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop"
         alt="Picture of the doctor"
       />
-      
+  
       <Box sx={{
         display: 'flex',
          flexDirection: 'column',
@@ -99,11 +102,15 @@ sx={{
             }}>
           {el.speciality}
           </Typography>
+          <Rate
+     disabled defaultValue={4} 
+     />
           <Typography component="div" variant="h5"
           sx={{ 
             fontSize: '40px'
            }}>
-          {el.availability}
+
+             {el.availability}
           </Typography>
           <Typography component="div" variant="h5" 
           sx={{ 
@@ -111,16 +118,28 @@ sx={{
             }}>
           {el.phonenumber}
           </Typography>
+          <Typography component="div" variant="h5" 
+          sx={{ 
+            fontSize: '40px' 
+            }}>
+          {el.email}
+          </Typography>
+        
           </CardContent>
+      
       </Box>
     </Card>
-    //  </Box>
     )
         })
     }
-    </Box>
 
+    <Box  sx={{ 
+            marginTop:'50%',
+            marginLeft:'50%',
+           }} >
+     <Pagination defaultCurrent={1} total={100} />
+     </Box>
+    </Box>
  )
 }
-
 export default Doctor
