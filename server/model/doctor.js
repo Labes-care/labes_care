@@ -21,7 +21,7 @@ const Doctor = sequelize.define('Doctor', {
     allowNull: false,
   },
   cin: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(300),
     allowNull: false,
   },
   certificate_img: {
