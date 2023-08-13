@@ -25,9 +25,9 @@ cloudinary.config({
   });
   
 
-router.post('/doctors', upload.single('certificate_img'), async (req, res) => {
+router.post('/doctors', upload.fields([{ name: 'certificate_img' }, { name: 'cin' }]), async (req, res) => {
     try {
-      const { fullname, email, password, speciality, cin, phonenumber, address } = req.body;
+      const { fullname, email, password, speciality, phonenumber, address } = req.body;
   
       const existingDoctor = await Doctor.findOne({ where: { email } });
       if (existingDoctor) {
@@ -37,28 +37,36 @@ router.post('/doctors', upload.single('certificate_img'), async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
   
       // Upload the image to Cloudinary
-      const imageResult = await new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          {
-            resource_type: 'image',
-          },
-          (error, result) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
-            }
-          }
-        ).end(req.file.buffer);
-      });
+      const imageResults = await Promise.all(
+        Object.keys(req.files).map(async (fieldName) => {
+          const imageResult = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+              {
+                resource_type: 'image',
+              },
+              (error, result) => {
+                if (error) {
+                  reject(error);
+                } else {
+                  resolve(result);
+                }
+              }
+            ).end(req.files[fieldName][0].buffer);
+          });
+          return { fieldName, imageResult };
+        })
+      );
+  
+      const cinImage = imageResults.find((result) => result.fieldName === 'cin').imageResult;
+      const certificateImg = imageResults.find((result) => result.fieldName === 'certificate_img').imageResult;
   
       const newDoctor = await Doctor.create({
         fullname,
         email,
         password: hashedPassword,
         speciality,
-        cin,
-        certificate_img: imageResult.secure_url, // Store the Cloudinary image URL
+        cin:cinImage.secure_url,
+        certificate_img: certificateImg.secure_url, // Store the Cloudinary image URL
         phonenumber,
         address,
       });
@@ -70,8 +78,7 @@ router.post('/doctors', upload.single('certificate_img'), async (req, res) => {
     }
   });
 
-router.post("/patient/login",AuthController.PatientLogin);
-router.post("/doctor/login",AuthController.DoctorLogin);
+
 
 
 

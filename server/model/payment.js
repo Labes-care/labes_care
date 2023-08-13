@@ -3,23 +3,15 @@ const sequelize = require('../database/db');
 const Doctor = require('./doctor');
 
 const Payment = sequelize.define('Payment', {
-  fullname: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  cin: {
+  amount: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  password: {
-    type: DataTypes.STRING,
+  paymentDate: {
+    type: DataTypes.DATEONLY,
     allowNull: false,
   },
-  validation_cin: {
+  expirationDate: {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },

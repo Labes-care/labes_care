@@ -20,6 +20,7 @@ const doctor = require ('./router/doctor')
 const auth = require ('./router/auth')
 const DoProfile = require('./router/DoProfile')
 const admin = require('./router/admin')
+const payment = require ('./router/payment') 
 
 
 
@@ -34,6 +35,7 @@ app.use("/doctorProfile",doctorPofileRouter)
 app.use("/api/doctors",doctor)
 app.use("/auth",auth)
 app.use("/admin",admin)
+app.use('/flouci',payment)
 
 
 app.use("/",DoProfile)

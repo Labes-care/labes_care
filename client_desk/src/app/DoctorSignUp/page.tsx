@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { MenuItem } from '@mui/material';
+import { Card, CardContent, IconButton, InputAdornment, InputLabel, MenuItem } from '@mui/material';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -23,6 +23,14 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Paper from '@mui/material/Paper';
 import { Input } from '@mui/material';
+import './signup.css'
+import Divider from '@mui/material/Divider';
+import { FormHelperText } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 
 
@@ -52,15 +60,25 @@ export default function Page({ doctorId }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [speciality, setspeciality] = useState('');
-  const [cin, setcin] = useState('');
+  const [cin, setcin] = useState<null | File>(null)
 
   const [phonenumber, setphonenumber] = useState('');
   const [address, setaddress] = useState('');
   const [error, setError] = useState('');
   const [activeStep, setActiveStep] = React.useState(0);
   const [certificateImg, setCertificateImg] = useState<null | File>(null);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true)
 
   const router = useRouter()
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
 
 
@@ -70,10 +88,13 @@ export default function Page({ doctorId }: Props) {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsEmailValid(emailRegex.test(e.target.value));
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setIsPasswordValid(e.target.value.length >= 6);
   };
 
   const handlespecialityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +102,9 @@ export default function Page({ doctorId }: Props) {
   };
 
   const handlecinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setcin(e.target.value);
+    if (e.target.files && e.target.files.length > 0) {
+      setcin(e.target.files[0]);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,23 +126,24 @@ export default function Page({ doctorId }: Props) {
       formData.append('email', email);
       formData.append('password', password);
       formData.append('speciality', speciality);
-      formData.append('cin', cin);
+      if (cin !== null) {
+        formData.append('cin', cin);
+      }
       if (certificateImg !== null) {
         formData.append('certificate_img', certificateImg);
-      } 
+      }
       formData.append('phonenumber', phonenumber);
       formData.append('address', address);
-  
+
       const response = await axios.post('http://localhost:3003/auth/doctors', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', 
+          'Content-Type': 'multipart/form-data',
         },
       });
-  
+
       if (response.status === 201) {
-        console.log('Signup successful');
-        console.log(response.data.id);
-  
+        alert('SignUp successfuly');
+
         router.push(`/Login`);
       } else {
         console.log('Signup failed');
@@ -137,210 +161,283 @@ export default function Page({ doctorId }: Props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   const isStepOptional = (step: number) => {
     return step === 2;
   };
 
+  const validateForm = () => {
+    if (activeStep === 0) {
+      return fullname !== '' && email !== '' && password !== '';
+    } else if (activeStep === 1) {
+      return cin !== null && certificateImg !== null && speciality !== '';
+    } else if (activeStep === 2) {
+      return phonenumber !== '' && address !== '';
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    setIsFormValid(validateForm());
+  }, [fullname, email, password, cin, certificateImg, speciality, phonenumber, address, activeStep]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
+    <div className="center-container">
+      <div className="float-container">
+        <div className="float-child float-child1">
+          <div className="centered">
+            <div className="frame">
+              <figure>
+                <div className="image-1"></div>
+                {/* Loop for image-2 */}
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <div key={index} className="image-2"></div>
+                ))}
+              </figure>
+            </div>
+          </div>
+        </div>
 
-           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-             <LockOutlinedIcon />
-           </Avatar>
-         <Typography component="h1" variant="h5">
-            Sign up
-           </Typography>
+        <div className="float-child float-child2">
+          <div className="centered">
+            <ThemeProvider theme={defaultTheme}>
+              <Container component="main" maxWidth="xs">
+                <CssBaseline />
 
-    <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps: { completed?: boolean } = {};
-          const labelProps: {
-            optional?: React.ReactNode;
-          } = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">last  Step</Typography>
-            );
-          }
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign up
+                </Typography>
 
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+                <Box sx={{ width: '100%' }}>
+                  <Stepper activeStep={activeStep}>
+                    {steps.map((label, index) => {
+                      const stepProps: { completed?: boolean } = {};
+                      const labelProps: {
+                        optional?: React.ReactNode;
+                      } = {};
+                      if (isStepOptional(index)) {
+                        labelProps.optional = (
+                          <Typography variant="caption">last  Step</Typography>
+                        );
+                      }
 
-      {activeStep === 0 && (
-        <Box component="form" noValidate sx={{ mt: 3 }}>
-          <Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="fullname"
-                label="fullname"
-                name="fullname"
-                autoComplete="fullname"
-                autoFocus
-                value={fullname}
-                onChange={handlefullnameChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-      )}
+                      return (
+                        <Step key={label} {...stepProps}>
+                          <StepLabel {...labelProps}>{label}</StepLabel>
+                        </Step>
+                      );
+                    })}
+                  </Stepper>
 
-
-      {activeStep === 1 && (
-        <><Box component="form" noValidate sx={{ mt: 3 }}>
-          <Grid>
-            <Grid item xs={12}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="cin"
-                label="cin"
-
-                id="cin"
-                value={cin}
-                onChange={handlecinChange} />
-            </Grid><Grid item xs={12}>
-              <Input type="file" inputProps={{ accept: 'image/*' }} onChange={handleImageUpload} />
-
-            </Grid><Grid item xs={12}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="phonenumber"
-                label="phonenumber"
-                id="phonenumber"
-                value={phonenumber}
-                onChange={handlephonenumberChange} />
-            </Grid><Grid item xs={12}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="address"
-                label="address"
-                id="address"
-                value={address}
-                onChange={handleaddressChange} />
-            </Grid><Grid item xs={12}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="speciality"
-                label="speciality"
-                select
-                id="speciality"
-                value={speciality}
-                onChange={handlespecialityChange}
-              >
-                <MenuItem value="Neurology">Neurology</MenuItem>
-                <MenuItem value="Cardiology">Cardiology</MenuItem>
-                <MenuItem value="Dermatology">Dermatology</MenuItem>
-                <MenuItem value="dentistry">dentistry</MenuItem>
-                <MenuItem value="orthopedic">orthopedic</MenuItem>
-                <MenuItem value="ophthalmology">ophthalmology</MenuItem>
-                <MenuItem value="Pulmonology">Pulmonology</MenuItem>
-              </TextField>
-            </Grid>
-
-          </Grid>
-        </Box><Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={handleRegister}
-        >
-            Sign Up
-          </Button></>
-
-  )
-}
+                  {activeStep === 0 && (
+                    <Box component="form" noValidate sx={{ mt: 3 }}>
+                      <Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl sx={{ m: 1, width: '37ch' }} variant="standard">
+                            <TextField
+                              margin="normal"
+                              required
+                              fullWidth
+                              id="fullname"
+                              label="fullname"
+                              name="fullname"
+                              autoComplete="fullname"
+                              autoFocus
+                              value={fullname}
+                              onChange={handlefullnameChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl sx={{ m: 1, width: '37ch' }} variant="standard">
+                            <TextField
+                              margin="normal"
+                              required
+                              fullWidth
+                              id="email"
+                              label="Email Address"
+                              name="email"
+                              autoComplete="email"
+                              autoFocus
+                              value={email}
+                              onChange={handleEmailChange}
+                              error={!isEmailValid}
+                              helperText={isEmailValid ? '' : 'Veuillez saisir une adresse e-mail valide.'}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <FormControl sx={{ m: 1, width: '37ch' }} variant="standard" error={!isPasswordValid}>
+                          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                          <Input
+                            id="standard-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            onChange={handlePasswordChange}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          {!isPasswordValid && <FormHelperText>Veuillez saisir une password valide.</FormHelperText>}
+                        </FormControl>
+                      </Grid>
+                    </Box>
+                  )}
 
 
+                  {activeStep === 1 && (
+                    <><Box component="form" noValidate sx={{ mt: 3 }}>
+                      <Grid>
+                        <Grid item xs={12}>
+                          <label htmlFor="cin" className="file-input-label">
+                            Upload Cin Images Recto
+                            <input
+                              type="file"
+                              id="cin"
+                              name="cin"
+                              accept="image/*"
+                              onChange={handlecinChange}
+                              required
+                            />
+                          </label>
+                        </Grid>
+                        <br />
 
-{
-  activeStep === steps.length ? (
-    <React.Fragment>
-      <Typography sx={{ mt: 2, mb: 1 }}>
-        All steps completed - you&apos;re finished
-      </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleReset}>Reset</Button>
-      </Box>
-    </React.Fragment>
-  ) : (
-    <React.Fragment>
-      <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        <Button
-          color="inherit"
-          disabled={activeStep === 0}
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          Back
-        </Button>
-        <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleNext}>
-          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-        </Button>
-      </Box>
-    </React.Fragment>
-  )
-}
+                        <Grid item xs={12}>
+                          <label htmlFor="cin" className="file-input-label">
+                            Upload your certeficate
+                            <input type="file"
+                              id="certificate_img"
+                              name="certificate_img"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              required
+                            />
+                          </label>
+                        </Grid><Grid item xs={12}>
+                          <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="speciality"
+                            label="speciality"
+                            select
+                            id="speciality"
+                            value={speciality}
+                            onChange={handlespecialityChange}
+                          >
+                            <MenuItem value="Neurology">Neurology</MenuItem>
+                            <MenuItem value="Cardiology">Cardiology</MenuItem>
+                            <MenuItem value="Dermatology">Dermatology</MenuItem>
+                            <MenuItem value="dentistry">dentistry</MenuItem>
+                            <MenuItem value="orthopedic">orthopedic</MenuItem>
+                            <MenuItem value="ophthalmology">ophthalmology</MenuItem>
+                            <MenuItem value="Pulmonology">Pulmonology</MenuItem>
+                          </TextField>
+                        </Grid>
 
-  </Box >
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+                      </Grid>
+                    </Box></>
 
+                  )
+                  }
+
+                  {activeStep === 2 && (
+                    <Box component="form" noValidate sx={{ mt: 3 }}>
+                      <Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="phonenumber"
+                            label="phonenumber"
+                            id="phonenumber"
+                            value={phonenumber}
+                            onChange={handlephonenumberChange} />
+                        </Grid><Grid item xs={12}>
+                          <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="address"
+                            label="address"
+                            id="address"
+                            value={address}
+                            onChange={handleaddressChange} />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  )
+                  }
+
+                  {
+                    activeStep === steps.length ? (
+                      <React.Fragment>
+                        <br />
+                        <br />
+
+                        <br />
+
+                        you will recieve an email
+
+                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                          <Box sx={{ flex: '1 1 auto' }} />
+
+                        </Box>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+
+                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                          <Button
+                            color="inherit"
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            sx={{ mr: 1 }}
+                          >
+                            Back
+                          </Button>
+                          <Box sx={{ flex: '1 1 auto' }} />
+
+                          {activeStep === steps.length - 1 ? <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={handleRegister}
+                            disabled={!(activeStep === steps.length - 1 && isFormValid)}
+                          >
+                            Sign Up
+                          </Button> : <Button
+                            disabled={!(isFormValid)}
+                            onClick={handleNext}>
+                            Next
+                          </Button>}
+
+                        </Box>
+                      </React.Fragment>
+                    )
+                  }
+
+                </Box >
+
+              </Container>
+            </ThemeProvider>
+          </div>
+          <Copyright sx={{ mt: 5 }} className='copyright' />
+        </div>
+      </div>
+
+    </div>
 
   )
 }
