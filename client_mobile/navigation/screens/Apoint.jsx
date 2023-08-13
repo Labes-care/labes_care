@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { WebView } from 'react-native-webview';
+import { useNavigation } from '@react-navigation/native';
 
-const Apointement = ({ uri }) => {
-  return <WebView 
-  source={{ uri:'http://192.168.10.250:3000/' }}
-  />;
+const ModelViewer = () => {
+  const webViewRef = useRef(null);
+  const navigation = useNavigation();
+
+  const onWebViewMessage = event => {
+    const messageData = JSON.parse(event.nativeEvent.data);
+    console.log('Received message:', messageData);
+    
+    if (messageData.option !== '') {
+      navigation.navigate('Appointmen'); 
+    }
+  };
+
+  return (
+    <WebView
+      ref={webViewRef}
+      source={{ uri: 'http://192.168.100.250:3000/index.html' }}
+      onMessage={onWebViewMessage}
+    />
+  );
 };
 
-export default Apointement;
+export default ModelViewer;
