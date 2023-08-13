@@ -10,6 +10,9 @@ import LoginScreen from '../client_mobile/navigation/screens/Login';
 import Apointement from '../client_mobile/navigation/screens/Apoint';
 import TutorialScreen from '../client_mobile/navigation/screens/Tutorialsc';
 import Chat from '../client_mobile/navigation/screens/chat';
+import AppointmentScreen from '../client_mobile/navigation/screens/AppointmentScreen'
+import DoctorDetailsScreen from '../client_mobile/navigation/screens/Doctordetail'; // Import the new component
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,6 +102,8 @@ const App = () => {
         <Stack.Screen name="Tutorial" component={TutorialScreen} />
         <Stack.Screen name="Start" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeTabs} />
+        <Stack.Screen name="Appointmen" component={AppointmentScreen} />
+        <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
