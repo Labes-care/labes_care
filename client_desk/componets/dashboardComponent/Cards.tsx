@@ -1,57 +1,76 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
+'use client'
+import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Link from 'next/link';
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid';
+import Link from 'next/link'
+import './cards.css'
 
 export default function cards() {
+  
+  
   return (
-    <div className='container'>
-       <Card sx={{ minWidth: 275 }} className=''>
-     
-      <CardContent className='ag-courses-item_bg'>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-    </Card> 
-    
+    <Grid container spacing={2}>
+    <Grid item xs={12} sm={4}>
+      <Card sx={{ minWidth: 275 , backgroundColor: '#b9a29b1f' }}>
+        <CardContent>
+          <Typography sx={{ mb: 1.2 }} color="text.secondary">
+            All Patients
+          </Typography>
+          <Typography variant="body2">
+          22
+          </Typography>
+        </CardContent>
+        <CardActions>
+        <Link href="/admin/adminAllClient">
+              <Button>See All</Button>
+            </Link>
+        </CardActions>
+      </Card>
+    </Grid>
 
-    <Card sx={{ minWidth: 275 }} className='ag-courses_item'>
-     
-      <CardContent className='ag-courses-item_bg'>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-    </Card> 
 
-    <Card sx={{ minWidth: 275 }} className='ag-courses_item'>
-        
-      <CardContent className='ag-courses-item_bg'>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-    </Card> 
-    </div>
+
+    <Grid item xs={12} sm={4}>
+      <Card sx={{ minWidth: 275 ,backgroundColor: '#b9a29b1f' }}>
+      <CardContent>
+          <Typography sx={{ mb: 1.2 }} color="text.secondary">
+           seller
+          </Typography>
+          <Typography variant="body2">
+           Apointment
+          </Typography>
+        </CardContent>
+        <CardActions>
+        <Link href="/admin/adminAllSeller">
+              <Button>See All</Button>
+            </Link>
+        </CardActions>
+      </Card>
+    </Grid>
+
+
+
+    <Grid item xs={12} sm={4}>
+      <Card sx={{ minWidth: 275 , backgroundColor: '#b9a29b1f' }}>
+      <CardContent>
+          <Typography sx={{ mb: 1.2 }} color="text.secondary">
+          Colleagues
+          </Typography>
+          <Typography variant="body2">
+           22
+          </Typography>
+        </CardContent>
+        <CardActions>
+        <Link href="/admin/adminAllProduct">
+              <Button>See All</Button>
+            </Link>
+        </CardActions>
+      </Card>
+    </Grid>
+  </Grid>
   )
 }
+
