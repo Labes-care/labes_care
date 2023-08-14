@@ -21,7 +21,7 @@ const Doctor = sequelize.define('Doctor', {
     allowNull: false,
   },
   cin: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(300),
     allowNull: false,
   },
   certificate_img: {
@@ -52,7 +52,7 @@ const Doctor = sequelize.define('Doctor', {
   availability: {
     type: DataTypes.TINYINT,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 0, 
   },
   approvalStatus: {
     type: DataTypes.ENUM('pending', 'approved', 'rejected'),

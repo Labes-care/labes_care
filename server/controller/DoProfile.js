@@ -6,7 +6,9 @@ getDoProfile : async(req,res)=>{
     const { id } = req.params;
 
     try {
-      const Doctor = await doctor.findByPk(id);
+      const Doctor = await doctor.findOne({
+        where:{id}
+      });
   
       if (!Doctor) {
         return res.status(404).json({ message: 'Doctor not found' });

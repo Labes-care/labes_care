@@ -48,7 +48,6 @@ function Profile() {
 
  
 
-  
 
   useEffect(() => {
 

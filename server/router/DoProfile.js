@@ -4,6 +4,6 @@ const router = express.Router();
 const { getDoProfile } = require("../controller/DoProfile");
 
 
-router.get('/profile/:id',getDoProfile)
+router.get('/DoProfile/:id',getDoProfile)
 
 module.exports = router ;

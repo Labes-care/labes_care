@@ -3,6 +3,7 @@ const doctor=require('../model/doctor')
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Payment = require('../model/payment');
 
 const AuthController = {
 
@@ -110,13 +111,29 @@ console.log(newDoctor)
         return res.status(401).json({ error: 'Invalid password' });
       }
 
+      const paymentDetails = await Payment.findOne({ where: { doctors_iddoctors: Doctor.id } });
+
+      if (Doctor.approvalStatus === 'pending') {
+        return res.status(200).json({ approvalStatus: 'Pending approval', id: Doctor.id });
+      }
+
+      if (!paymentDetails) {
+        return res.status(200).json({ approvalStatus: 'Approved', paymentStatus: 'Payment required',id: Doctor.id });
+      }
+
+      const currentDate = new Date();
+      if (currentDate > paymentDetails.expirationDate) {
+        return res.status(200).json({ paymentStatus: 'Payment expired',id: Doctor.id });
+      }
+
+
       const token = jwt.sign({ id: Doctor.id, email: Doctor.email }, 'your-secret-key', {
         
         expiresIn: '12h' 
         
       });
      
-      res.json({ id: Doctor.id, token });
+      res.json({ id: Doctor.id, token ,paymentStatus: 'success'});
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });
