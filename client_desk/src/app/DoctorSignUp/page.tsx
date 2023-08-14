@@ -130,7 +130,7 @@ export default function Page({ doctorId }: Props) {
         formData.append('cin', cin);
       }
       if (certificateImg !== null) {
-        formData.append('certificate_img', certificateImg);
+        formData.append('certificate_img', certificateImg)
       }
       formData.append('phonenumber', phonenumber);
       formData.append('address', address);

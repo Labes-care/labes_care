@@ -22,6 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import { useParams } from 'next/navigation'
 import { Dshboard } from '../../../../componets';
 import CardMedia from '@mui/material/CardMedia';
+import {Doctor} from '../../../../componets';
 
 const drawerWidth = 240;
 
@@ -229,7 +230,7 @@ export default function Page() {
 
         {activeContent === 'Doctors' && (
           <Typography paragraph>
-            Doctors
+           <Doctor/>
           </Typography>
         )}
 
