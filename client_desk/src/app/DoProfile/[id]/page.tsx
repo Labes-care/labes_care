@@ -22,6 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import { useParams } from 'next/navigation'
 import { Dshboard } from '../../../../componets';
 import CardMedia from '@mui/material/CardMedia';
+
 import { Appointment } from '../../../../componets';
 import Menu from '@mui/material/Menu';
 
@@ -31,6 +32,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import './doprofil.css'
+
+import {Doctor} from '../../../../componets';
+
 
 const drawerWidth = 240;
 
@@ -277,7 +281,7 @@ export default function Page() {
 
         {activeContent === 'Doctors' && (
           <Typography paragraph>
-            Doctors
+           <Doctor/>
           </Typography>
         )}
 

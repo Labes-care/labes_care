@@ -16,6 +16,4 @@ payment.belongsTo(doctor, { as: 'doctor', foreignKey: 'doctors_iddoctors' });
 doctor.belongsToMany(patient, { through: DoctorsPatients, foreignKey: 'doctors_iddoctors' });
 patient.belongsToMany(doctor, { through: DoctorsPatients, foreignKey: 'patients_idpatients' });
 
-
-
 module.exports=sequelize
