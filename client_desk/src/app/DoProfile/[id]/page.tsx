@@ -22,6 +22,15 @@ import MailIcon from '@mui/icons-material/Mail';
 import { useParams } from 'next/navigation'
 import { Dshboard } from '../../../../componets';
 import CardMedia from '@mui/material/CardMedia';
+import { Appointment } from '../../../../componets';
+import Menu from '@mui/material/Menu';
+
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import './doprofil.css'
 
 const drawerWidth = 240;
 
@@ -88,10 +97,12 @@ interface doctor {
   certificate_img:string
 }
 
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Page() {
   const [doctor, setDoctor] = useState<doctor | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [activeContent, setActiveContent] = useState('Dashboard');
@@ -102,6 +113,14 @@ export default function Page() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };  
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   const searchParams = useParams()
@@ -154,8 +173,37 @@ export default function Page() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Labes_Care
           </Typography>
+          <Box className='avatar' sx={{ flexGrow: 33 }} >
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -197,7 +245,7 @@ export default function Page() {
         <Divider />
         
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['Calendar', 'Trash', 'Spam'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -223,7 +271,7 @@ export default function Page() {
 
         {activeContent === 'Appointments' && (
           <Typography paragraph>
-            Appointments
+           <Appointment/>
           </Typography>
         )}
 

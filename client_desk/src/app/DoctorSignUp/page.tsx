@@ -235,7 +235,7 @@ export default function Page({ doctorId }: Props) {
                     <Box component="form" noValidate sx={{ mt: 3 }}>
                       <Grid>
                         <Grid item xs={12} sm={6}>
-                          <FormControl sx={{ m: 1, width: '37ch' }} variant="standard">
+                          
                             <TextField
                               margin="normal"
                               required
@@ -243,12 +243,13 @@ export default function Page({ doctorId }: Props) {
                               id="fullname"
                               label="fullname"
                               name="fullname"
+                              variant="standard"
                               autoComplete="fullname"
                               autoFocus
                               value={fullname}
                               onChange={handlefullnameChange}
                             />
-                          </FormControl>
+                         
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl sx={{ m: 1, width: '37ch' }} variant="standard">
@@ -259,6 +260,7 @@ export default function Page({ doctorId }: Props) {
                               id="email"
                               label="Email Address"
                               name="email"
+                              variant="standard"
                               autoComplete="email"
                               autoFocus
                               value={email}
@@ -360,6 +362,7 @@ export default function Page({ doctorId }: Props) {
                             fullWidth
                             name="phonenumber"
                             label="phonenumber"
+                            variant="standard"
                             id="phonenumber"
                             value={phonenumber}
                             onChange={handlephonenumberChange} />
@@ -370,6 +373,7 @@ export default function Page({ doctorId }: Props) {
                             fullWidth
                             name="address"
                             label="address"
+                            variant="standard"
                             id="address"
                             value={address}
                             onChange={handleaddressChange} />

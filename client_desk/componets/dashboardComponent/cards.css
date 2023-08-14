@@ -1,0 +1,19 @@
+.cards{
+    display: flex;
+   
+    color: white;
+    
+    margin-left: 10px;
+    text-align: center;
+    position:absolute;
+    left: 17%;
+    top: 30%;
+}
+.card {
+    position:absolute;
+    left: 17%;
+    top: 30%;
+    height: 20px;
+    width: 5%;
+    
+}
