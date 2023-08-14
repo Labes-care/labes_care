@@ -70,7 +70,13 @@ const Calander: React.FC = () => {
     if (info.type === 'month') return monthCellRender(current);
     return info.originNode;
   };
-  return  <Calendar cellRender={cellRender} />;
+  return (
+    <div style={{
+      width:'50%',
+      height:'50%'
+    }}>
+     <Calendar  cellRender={cellRender} />
+     </div>)
 };
 
 export default Calander;
