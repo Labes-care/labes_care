@@ -1,0 +1,79 @@
+.cards {
+    display: flex;
+    color: white;
+    margin-left: 10px;
+    text-align: center;
+    position: absolute;
+    left: 17%;
+    top: 30%;
+}
+
+.card {
+    position: absolute;
+    left: 17%;
+    top: 30%;
+    height: 20px;
+    width: 5%;
+}
+
+.card1 {
+    background: linear-gradient(to left, #3a7bd5, #3a6073)!important;
+}
+.card2{
+    background: linear-gradient(to right,#c33764,#1d2671)!important;
+}
+.card3{
+    background: linear-gradient(to left,#134e5e,#71b280)!important;
+}
+.tableContainer {
+    position: relative;
+    left: 1%;
+    top: 9%;
+    background-color: rgb(255, 255, 255);
+    width: 62%;
+    margin-top: -15%;
+    box-shadow: 3px 7px 14px 0 #6f6f6fba;
+    border-radius: 1%;
+}
+
+.chart {
+    position: relative;
+    left: -3%;
+    padding-top: -0%;
+    padding-bottom: 4%;
+    background-color: rgb(255, 255, 255);
+    width: 62%;
+    border-radius: 1%;
+    box-shadow: 3px 7px 14px 0 #6f6f6fba;
+    display: flex;
+    margin: 4%;
+}
+.Piechart{
+    position: relative;
+    left: 66%;
+    top: 50%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 3px 7px 14px 0 #6f6f6fba;
+    display: flex;
+    border-radius: 1%;
+    width: 34%;
+    margin-top: -135mm;
+    padding: 4%;
+}
+.DoctorList{
+    position: relative;
+    left: 66%;
+    top: 154%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 3px 7px 14px 0 #6f6f6fba;
+    display: flex;
+    border-radius: 1%;
+    width: 34%;
+    padding: 3%;
+    margin-top: 3%
+}
+.fileplace{
+    position: relative;
+    left: 0%;
+    
+}
