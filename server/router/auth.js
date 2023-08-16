@@ -78,8 +78,4 @@ router.post('/doctors', upload.fields([{ name: 'certificate_img' }, { name: 'cin
     }
   });
 
-
-
-
-
 module.exports = router
