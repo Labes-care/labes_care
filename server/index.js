@@ -16,8 +16,9 @@ const doctor = require ('./router/doctor')
 const auth = require ('./router/auth')
 const DoProfile = require('./router/DoProfile')
 const admin = require('./router/admin')
+const adminDashboard = require('./router/adminDashboard')
 const payment = require ('./router/payment') 
-const chatDocPatient = require('./router/chatDocPatient')
+
 
 
 const doctorRoutes = require('./router/DoctormobileRoutes');
@@ -38,8 +39,9 @@ app.use("/doctorProfile",doctorPofileRouter)
 app.use("/api/doctors",doctor)
 app.use("/auth",auth)
 app.use("/admin",admin)
+app.use('/adminDashboard',adminDashboard)
 app.use('/flouci',payment)
-app.use('/chat',chatDocPatient)
+
 
 
 app.use("/",DoProfile)
@@ -62,25 +64,4 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', error);
   });
 
-  const io = socket(server, {
-    cors: {
-      origin: "http://localhost:3003",
-      credentials: true,
-    },
-  });
-  
  
- 
-    io.on('connection', (socket) => {
-    console.log('A user connected');
-
-    // Handle incoming messages
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg); // Broadcast the message to all connected clients
-    });
-
-    // Handle disconnection
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});

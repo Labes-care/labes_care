@@ -22,7 +22,7 @@ interface doctor {
   
 }
 
-function Profile() {
+function DoctorProfile() {
   const router = useRouter()
   const [doctors, setDoctors] = useState<doctor[]>([])
   const [view, setView] = useState('Info')
@@ -250,4 +250,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default DoctorProfile
