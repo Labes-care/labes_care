@@ -21,6 +21,4 @@ const Payment = sequelize.define('Payment', {
   },
 });
 
-
-
 module.exports = Payment;
