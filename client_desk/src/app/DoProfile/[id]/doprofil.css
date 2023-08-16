@@ -1,5 +1,24 @@
+
 .avatar{
     position: absolute;
     left: 95%;
     
+}
+.carteimageDashoard{
+    box-shadow: 3px 7px 14px 0 #6f6f6fba;
+    top: 8%;
+    margin-bottom: 39%;
+    border-radius: 8%;
+    left: -27%;
+    position: relative;
+}
+.listAppBar{
+    position: absolute;
+    
+    top: 10%;
+}
+.listAppBar2{
+    position: absolute;
+    
+    top: 10%;
 }

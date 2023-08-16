@@ -69,6 +69,7 @@ try{
           <div>Name: {doctor.fullname}</div>
           <div>Email: {doctor.email}</div>
           <img src={doctor.certificate_img} alt="image" />
+          <img src={doctor.cin} alt="image" />
           <button onClick={() => approveDoctor(doctor.id)}>Approve</button>
           <button onClick={() => rejectedDoctor(doctor.id)}>Reject</button>
         </li>

@@ -61,6 +61,8 @@ export default function Page({ doctorId }: Props) {
   const [password, setPassword] = useState('');
   const [speciality, setspeciality] = useState('');
   const [cin, setcin] = useState<null | File>(null)
+  // const [profileimg, setprofileimg] = useState<null | File>(null)
+  // const [coverimg, setcoverimg] = useState<null | File>(null)
 
   const [phonenumber, setphonenumber] = useState('');
   const [address, setaddress] = useState('');
@@ -107,6 +109,18 @@ export default function Page({ doctorId }: Props) {
     }
   };
 
+  // const handlecoverimgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     setcoverimg(e.target.files[0]);
+  //   }
+  // };
+
+  // const handleprofileimgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     setprofileimg(e.target.files[0]);
+  //   }
+  // };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setCertificateImg(e.target.files[0]);
@@ -129,6 +143,12 @@ export default function Page({ doctorId }: Props) {
       if (cin !== null) {
         formData.append('cin', cin);
       }
+      // if (profileimg !== null) {
+      //   formData.append('profileimg', profileimg);
+      // }
+      // if (coverimg!== null) {
+      //   formData.append('coverimg', coverimg);
+      // }
       if (certificateImg !== null) {
         formData.append('certificate_img', certificateImg)
       }
@@ -235,21 +255,21 @@ export default function Page({ doctorId }: Props) {
                     <Box component="form" noValidate sx={{ mt: 3 }}>
                       <Grid>
                         <Grid item xs={12} sm={6}>
-                          
-                            <TextField
-                              margin="normal"
-                              required
-                              fullWidth
-                              id="fullname"
-                              label="fullname"
-                              name="fullname"
-                              variant="standard"
-                              autoComplete="fullname"
-                              autoFocus
-                              value={fullname}
-                              onChange={handlefullnameChange}
-                            />
-                         
+
+                          <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="fullname"
+                            label="fullname"
+                            name="fullname"
+                            variant="standard"
+                            autoComplete="fullname"
+                            autoFocus
+                            value={fullname}
+                            onChange={handlefullnameChange}
+                          />
+
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl sx={{ m: 1, width: '37ch' }} variant="standard">
@@ -353,7 +373,33 @@ export default function Page({ doctorId }: Props) {
                   }
 
                   {activeStep === 2 && (
+
                     <Box component="form" noValidate sx={{ mt: 3 }}>
+
+                      {/* <Grid item xs={12}>
+                        <label htmlFor="cover_img" className="file-input-label">
+                          Upload your certeficate
+                          <input type="file"
+                            id="cover_img"
+                            name="cover_img"
+                            accept="image/*"
+                            onChange={handlecoverimgChange}
+                            required
+                          />
+                        </label>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <label htmlFor="profile_img" className="file-input-label">
+                          Upload your certeficate
+                          <input type="file"
+                            id="profile_img"
+                            name="profile_img"
+                            accept="image/*"
+                            onChange={handleprofileimgChange}
+                            required
+                          />
+                        </label>
+                      </Grid> */}
                       <Grid>
                         <Grid item xs={12}>
                           <TextField

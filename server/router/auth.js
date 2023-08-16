@@ -59,6 +59,8 @@ router.post('/doctors', upload.fields([{ name: 'certificate_img' }, { name: 'cin
   
       const cinImage = imageResults.find((result) => result.fieldName === 'cin').imageResult;
       const certificateImg = imageResults.find((result) => result.fieldName === 'certificate_img').imageResult;
+      // const profileimg = imageResults.find((result) => result.fieldName === 'profile_img').imageResult;
+      // const coverimg = imageResults.find((result) => result.fieldName === 'cover_img').imageResult;
   
       const newDoctor = await Doctor.create({
         fullname,
@@ -69,6 +71,8 @@ router.post('/doctors', upload.fields([{ name: 'certificate_img' }, { name: 'cin
         certificate_img: certificateImg.secure_url, // Store the Cloudinary image URL
         phonenumber,
         address,
+        // profile_img: profileimg.secure_url,
+        // cover_img: coverimg.secure_url,
       });
   
       res.status(201).json({ message: 'Doctor created successfully' });

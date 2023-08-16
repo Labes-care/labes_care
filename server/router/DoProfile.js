@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { getDoProfile, getAppointments } = require("../controller/DoProfile");
+const { getDoProfile, getPatientsWithAppointments, getDoctors, getColleaguesCount } = require("../controller/DoProfile");
 
 
 router.get('/DoProfile/:id',getDoProfile)
-router.get('/appointment/:id' ,getAppointments)
+router.get('/appointment/:id' ,getPatientsWithAppointments)
+router.get('/doctors' ,getDoctors)
+router.get('/doctorsCount' ,getColleaguesCount)
+
 
 module.exports = router ;
