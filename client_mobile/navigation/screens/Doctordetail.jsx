@@ -1,17 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, StyleSheet, Button } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Calendar } from 'react-native-calendars';
 import { BlurView } from 'expo-blur';
+import { useAuth } from 'client_mobile/AuthContext.js'
+import axios from 'axios'
 
 const DoctorDetailsScreen = ({ route }) => {
+  const { patientId } = useAuth();
+  console.log('patientId from home',patientId)
   const { doctorId } = route.params;
+  console.log('patientId from detail',patientId)
+  console.log('doctor ID:', doctorId);
+
+  const [doctorDataa, setDoctorData] = useState([])
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.30.250:3003/doctors/${doctorId}`) 
+      .then(response => {
+        const fetchedDoctorData = response.data;
+        setDoctorData(fetchedDoctorData);
+      })
+      .catch(error => {
+        console.error('Error fetching doctor details:', error);
+      });
+  }, [doctorId]);
+
+  console.log(doctorDataa)
 
   const doctorData = {
-    name: 'Dr. John Doe',
-    profilePicture: 'https://s3-eu-west-1.amazonaws.com/intercare-web-public/wysiwyg-uploads%2F1580196666465-doctor.jpg',
-    coverPhoto: 'https://www.careersportal.co.za/sites/default/files/images/Terrique%20Faro/doctor.jpg',
-    specialty: 'Cardiologist',
+    name: doctorDataa.fullname,
+    profilePicture: doctorDataa.profile_img,
+    coverPhoto: doctorDataa.cover_img,
+    specialty: doctorDataa.speciality,
   };
 
   const timeSlots = [

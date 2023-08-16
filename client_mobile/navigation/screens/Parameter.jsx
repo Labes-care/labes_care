@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios'
+import { useAuth } from 'client_mobile/AuthContext.js'
 
-const Param = ({ navigation }) => {
-  const profileImageUri = 'https://i.pinimg.com/474x/6d/0e/05/6d0e052a59840858186a37ba74de24b3.jpg';
+const Param = ({ navigation}) => {
+
+  const { patientId } = useAuth();
+  console.log('patientId from param',patientId)
+
+  const [patientData, setPatientData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://192.168.30.250:3003/patients/${patientId}`);
+        const data = response.data;
+        setPatientData(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [patientId]);
+
+  console.log(patientData)
+  
+  const profileImageUri = patientData.profile_img;
 
   return (
     <LinearGradient colors={['#001F3F', '#000000']} style={styles.container}>
@@ -24,7 +50,7 @@ const Param = ({ navigation }) => {
 
           <View style={styles.profileTextContainer}>
             {/* Profile Name */}
-            <Text style={styles.profileName}>John Doe</Text>
+            <Text style={styles.profileName}>{patientData.fullname}</Text>
 
             {/* Small Text */}
             <Text style={styles.smallText}>Account Details</Text>
