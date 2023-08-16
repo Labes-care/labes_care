@@ -15,6 +15,7 @@ const DoctorsPatients = sequelize.define('DoctorsPatients', {
   status: {
     type: DataTypes.TINYINT,
     allowNull: false,
+    defaultValue: 0,
   },
   message: {
     type: DataTypes.STRING(500),

@@ -3,5 +3,4 @@ import Dshboard from "./Dshboard"
 
 export {
     Dshboard
-// here you will export them 
 }
