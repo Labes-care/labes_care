@@ -4,21 +4,266 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { useAuth } from 'client_mobile/AuthContext.js'
+import { useRoute } from '@react-navigation/native';
 
 const AppointmentScreen = () => {
   const navigation = useNavigation();
   const [doctorsData, setDoctorsData] = useState([]);
+  const { messageOption, hotspot } = useAuth();
+
+  const route = useRoute();
+  const circleId = route.params?.circleId;
+  console.log('from home',circleId)
+
 
   useEffect(() => {
-    axios.get('http://192.168.100.250:3003/doctors')
+    console.log('Received message option:', messageOption);
+    console.log('Received hotspot:', hotspot);
+
+    if ((circleId !== undefined) && (circleId==='1') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
       .then(response => {
-        console.log(response.data);
-        setDoctorsData(response.data);
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Neurology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
       })
       .catch(error => {
         console.error('Error fetching doctors:', error);
       });
-  }, []);
+    }
+    else if ((circleId !== undefined) && (circleId==='2') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'orthopedic');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='3') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Neurology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='4') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'ophthalmology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='5') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Cardiology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='6') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Pulmonology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='7') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Neurology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='8') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Neurology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='9') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Neurology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='10') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'dentistry');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='11') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Dermatology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((circleId !== undefined) && (circleId==='12') )
+    {
+      axios.get('http://192.168.30.250:3003/doctors')
+      .then(response => {
+        const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Cardiology');
+        console.log(filteredDoctors);
+        setDoctorsData(filteredDoctors);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+      });
+    }
+    else if ((messageOption.trim() === 'Option 3' && hotspot.trim() === 'Head') || (messageOption.trim() === 'Option 3' && hotspot.trim() === 'Chest') || (messageOption.trim() === 'Option 1' && hotspot.trim() === 'Abdomen') || (messageOption.trim() === 'Option 1' && hotspot.trim() === 'Leg') || (messageOption.trim() === 'Option 1' && hotspot.trim() === 'Arm') || (messageOption.trim() === 'Option 1' && hotspot.trim() === 'Back') )  {  // .trim() method to remove any leading/trailing spaces before comparison.
+      console.log('if');
+      const targetSpecialties = ['Neurology', 'Dermatology'];  
+
+      axios.get('http://192.168.30.250:3003/doctors')
+        .then(response => {
+          const filteredDoctors = response.data.filter(doctor => targetSpecialties.includes(doctor.speciality));
+          console.log(filteredDoctors);
+          setDoctorsData(filteredDoctors);
+        })
+        .catch(error => {
+          console.error('Error fetching doctors:', error);
+        });
+    } 
+    else if (messageOption.trim() === 'Option 2' && hotspot.trim() === 'Back') {  
+      console.log('if');
+      axios.get('http://192.168.30.250:3003/doctors')
+        .then(response => {
+          const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Neurology');
+          console.log(filteredDoctors);
+          setDoctorsData(filteredDoctors);
+        })
+        .catch(error => {
+          console.error('Error fetching doctors:', error);
+        });
+       }
+      else if ((messageOption.trim() === 'Option 1' && hotspot.trim() === 'Chest') ) {  // .trim() method to remove any leading/trailing spaces before comparison.
+        console.log('if');
+        axios.get('http://192.168.30.250:3003/doctors')
+          .then(response => {
+            const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Cardiology');
+            console.log(filteredDoctors);
+            setDoctorsData(filteredDoctors);
+          })
+          .catch(error => {
+            console.error('Error fetching doctors:', error);
+          });
+        }
+         else if (messageOption.trim() === 'Option 2' && hotspot.trim() === 'Head') { 
+      console.log('if');
+      axios.get('http://192.168.30.250:3003/doctors')
+        .then(response => {
+          const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'dentistry');
+          console.log(filteredDoctors);
+          setDoctorsData(filteredDoctors);
+        })
+        .catch(error => {
+          console.error('Error fetching doctors:', error);
+        });
+       }
+       else if ((messageOption.trim() === 'Option 5' && hotspot.trim() === 'Head') || (messageOption.trim() === 'Option 4' && hotspot.trim() === 'Chest') || (messageOption.trim() === 'Option 2' && hotspot.trim() === 'Abdomen') || (messageOption.trim() === 'Option 2' && hotspot.trim() === 'Leg') || (messageOption.trim() === 'Option 3' && hotspot.trim() === 'Leg') || (messageOption.trim() === 'Option 4' && hotspot.trim() === 'Leg') || (messageOption.trim() === 'Option 2' && hotspot.trim() === 'Arm') || (messageOption.trim() === 'Option 3' && hotspot.trim() === 'Arm')    ) {  // .trim() method to remove any leading/trailing spaces before comparison.
+        console.log('if');
+        axios.get('http://192.168.30.250:3003/doctors')
+          .then(response => {
+            const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'orthopedic');
+            console.log(filteredDoctors);
+            setDoctorsData(filteredDoctors);
+          })
+          .catch(error => {
+            console.error('Error fetching doctors:', error);
+          });
+         }
+         else if ( (messageOption.trim() === 'Option 1' && hotspot.trim() === 'Head') ) {  // .trim() method to remove any leading/trailing spaces before comparison.
+          console.log('if');
+          axios.get('http://192.168.30.250:3003/doctors')
+            .then(response => {
+              const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'ophthalmology');
+              console.log(filteredDoctors);
+              setDoctorsData(filteredDoctors);
+            })
+            .catch(error => {
+              console.error('Error fetching doctors:', error);
+            });
+           }
+           else if ( (messageOption.trim() === 'Option 4' && hotspot.trim() === 'Head') ) {  // .trim() method to remove any leading/trailing spaces before comparison.
+            console.log('if');
+            axios.get('http://192.168.30.250:3003/doctors')
+              .then(response => {
+                const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Pulmonology');
+                console.log(filteredDoctors);
+                setDoctorsData(filteredDoctors);
+              })
+              .catch(error => {
+                console.error('Error fetching doctors:', error);
+              });
+             }
+             else if ( (messageOption.trim() === 'Option 2' && hotspot.trim() === 'Chest') ) {  // .trim() method to remove any leading/trailing spaces before comparison.
+              console.log('if');
+              axios.get('http://192.168.30.250:3003/doctors')
+                .then(response => {
+                  const filteredDoctors = response.data.filter(doctor => doctor.speciality === 'Pulmonology');
+                  console.log(filteredDoctors);
+                  setDoctorsData(filteredDoctors);
+                })
+                .catch(error => {
+                  console.error('Error fetching doctors:', error);
+                });
+               }
+              }, [messageOption, hotspot,circleId]);
 
   const handleDoctorClick = (doctor) => {
     if (doctor.availability === 1) {

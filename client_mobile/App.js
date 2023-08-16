@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import HomeScreen from '../client_mobile/navigation/screens/Home';
 import Parameter from '../client_mobile/navigation/screens/Parameter';
 import LoginScreen from '../client_mobile/navigation/screens/Login';
@@ -12,6 +11,10 @@ import TutorialScreen from '../client_mobile/navigation/screens/Tutorialsc';
 import Chat from '../client_mobile/navigation/screens/chat';
 import AppointmentScreen from '../client_mobile/navigation/screens/AppointmentScreen'
 import DoctorDetailsScreen from '../client_mobile/navigation/screens/Doctordetail'; // Import the new component
+import Register from '../client_mobile/navigation/screens/Register' 
+
+import { AuthProvider } from './AuthContext';
+import { useAuth } from './AuthContext';
 
 
 const Stack = createStackNavigator();
@@ -97,15 +100,19 @@ const HomeTabs = () => {
 
 const App = () => {
   return (
+    <AuthProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Tutorialsc" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Tutorial" component={TutorialScreen} />
         <Stack.Screen name="Start" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeTabs} />
         <Stack.Screen name="Appointmen" component={AppointmentScreen} />
-        <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
+        <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} initialParams={{ doctorId: 'doctor_id', patientId: 'patient_id'}} />
+        <Stack.Screen name="register" component={Register} />
       </Stack.Navigator>
     </NavigationContainer>
+    </AuthProvider>
+
   );
 };
 

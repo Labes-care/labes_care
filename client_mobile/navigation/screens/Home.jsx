@@ -1,15 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useAuth } from 'client_mobile/AuthContext.js'
+import axios from 'axios'
+import Parameter from './Parameter'
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+
 
 const HomeScreen = () => {
-  const profileImageUri = 'https://i.pinimg.com/474x/6d/0e/05/6d0e052a59840858186a37ba74de24b3.jpg';
+  const { patientId } = useAuth();
+  const [patientData, setPatientData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation(); // Get the navigation object
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://192.168.30.250:3003/patients/${patientId}`);
+        const data = response.data;
+        setPatientData(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [patientId]);
+
+  console.log(patientData)
+  
+
+
+
+
+  const profileImageUri = patientData.profile_img;
 
   const data = [
     { id: '1', imageUri: require('../screens/models/22.png'), isLighten: false },
-    { id: '2', imageUri: require('../screens/models/33.png'), isLighten: false },
+    { id: '2', imageUri: require('../screens/models/33.png'), isLighten: true },
     { id: '3', imageUri: require('../screens/models/44.png'), isLighten: false },
     { id: '4', imageUri: require('../screens/models/55.png'), isLighten: false },
     { id: '5', imageUri: require('../screens/models/66.png'), isLighten: false },
@@ -28,22 +60,32 @@ const HomeScreen = () => {
     { id: '4', imageUri: 'https://via.placeholder.com/150', isLighten: false },
   ];
 
-  const CircleItem = ({ imageUri, isLighten }) => (
-    <View style={[styles.circle, isLighten && styles.lightenCircle]}>
-      <Image source={imageUri} style={styles.circleImage} />
-      {isLighten && <View style={styles.neonOverlay} />}
-    </View>
+
+
+  const CircleItem = ({ imageUri, isLighten, id }) => (
+    <TouchableOpacity onPress={() => handleCirclePress(id)}>
+      <View style={[styles.circle, isLighten && styles.lightenCircle]}>
+        <Image source={imageUri} style={styles.circleImage} />
+        {isLighten && <View style={styles.neonOverlay} />}
+      </View>
+    </TouchableOpacity>
   );
+
+  const handleCirclePress = (id) => {
+    console.log('Circle ID:', id);
+    navigation.navigate('Appointmen', { circleId: id });
+  };
 
   const [lightenIndex, setLightenIndex] = useState(-1);
 
+ 
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#001F3F', '#000000']} style={styles.gradient}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
             <Text style={styles.greetingText}>
-              Hi, Mohamed! {'  '}
+              Hi, {patientData.fullname} ! {'  '}
               <Image source={require('../screens/waving-hand_1f44b.png')} style={styles.greetingImage} /> {' '}
             </Text>
 
@@ -69,13 +111,13 @@ const HomeScreen = () => {
             horizontal
             data={data}
             renderItem={({ item, index }) => (
-              <TouchableOpacity onPress={() => setLightenIndex(index)}>
-                <CircleItem imageUri={item.imageUri} isLighten={index === lightenIndex} />
-              </TouchableOpacity>
+              <CircleItem imageUri={item.imageUri} isLighten={index === lightenIndex} id={item.id} />
             )}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.circleList}
           />
+
+
 
           <TouchableOpacity style={styles.seeAllButton}>
             <Text style={styles.seeAllText}>See All</Text>
@@ -134,7 +176,7 @@ const styles = StyleSheet.create({
   greetingText: {
     color: '#FFFFFF',
     fontSize: 19,
-    marginRight: 158,
+    marginRight: 140,
   },
   profileImageContainer: {
     width: 40,

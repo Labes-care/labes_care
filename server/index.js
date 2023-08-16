@@ -13,14 +13,12 @@ const socket = require("socket.io");
 
 const doctorPofileRouter = require('./router/doctorProfile')
 const doctor = require ('./router/doctor')
+const events = require ('./router/event')
 const auth = require ('./router/auth')
 const DoProfile = require('./router/DoProfile')
 const admin = require('./router/admin')
 const adminDashboard = require('./router/adminDashboard')
 const payment = require ('./router/payment') 
-
-
-
 const doctorRoutes = require('./router/DoctormobileRoutes');
 
 app.use(express.urlencoded({extended:true}))
@@ -33,10 +31,10 @@ app.use('/',doctorRoutes);
 app.use('/',doctorRoutes);
 
 
-
+app.use("/api/doctors",doctor)
+app.use("/doctor/event",events)
 
 app.use("/doctorProfile",doctorPofileRouter)
-app.use("/api/doctors",doctor)
 app.use("/auth",auth)
 app.use("/admin",admin)
 app.use('/adminDashboard',adminDashboard)

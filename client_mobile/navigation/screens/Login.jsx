@@ -1,24 +1,45 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
+import { useAuth } from 'client_mobile/AuthContext.js'
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { updatePatientId } = useAuth();
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://192.168.30.250:3003/login', { 
+        "email": username,
+        "password": password
+      });
+  
+      if (response.status === 200) {
+        const token = response.data.token;
+  
+        const decodedToken = jwt_decode(token); 
+  
+        const patientId = decodedToken.id;
+  
+        console.log('Logged in successfully. Patient ID:', patientId);
+        updatePatientId(patientId); 
 
-  const handleLogin = () => {
-    if (username === 'M' && password === 'H') {
-      navigation.navigate('Home');
-    } else {
-      alert('Please try again.');
+        navigation.navigate('Home');
+      } else {
+        alert('Invalid credentials. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during login', error);
+      alert('An error occurred during login. Please try again.');
     }
   };
-
   return (
     <LinearGradient colors={['#001F3F', '#000000']} style={styles.container}>
       <View style={styles.gifContainer}>
         <Image
-          source={require('../screens/doctor-70s.gif')}
+          source={require('../screens/models/db5dea2caaa75e7219d218f76ba1f976.png')}
           style={styles.gif}
         />
         <Text style={styles.gifText}>Care your health</Text>
@@ -40,6 +61,7 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={setPassword}
           style={styles.input}
         />
+
         <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
@@ -49,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Don't have an account?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('register')}>
           <Text style={styles.signupLink}>Sign Up</Text>
         </TouchableOpacity>
       </View>
@@ -70,8 +92,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gif: {
-    width: 730,
-    height: 450,
+    width: 9999,
+    height: 499,
     resizeMode: 'contain',
     marginTop : -130,
 
@@ -89,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     borderRadius: 10,
-    marginBottom : -100,
+    marginBottom : -135,
 
   },
   loginText: {

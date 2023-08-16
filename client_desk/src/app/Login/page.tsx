@@ -170,6 +170,7 @@ export default function Page() {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      variant="standard"
                       autoFocus
                       value={email}
                       onChange={handleEmailChange}
@@ -185,6 +186,7 @@ export default function Page() {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      variant="standard"
                       value={password}
                       onChange={handlePasswordChange}
                       error={!isPasswordValid} // Apply error style
