@@ -151,10 +151,13 @@ const deletePatient = async (req, res) => {
 
 // Create a new relationship between a doctor and a patient
 const createRelationship = async (req, res) => {
+  const { doctors_iddoctors, patients_idpatients } = req.body;
+
   try {
-    const newRelationship = await DoctorsPatients.create(req.body);
+    const newRelationship = await DoctorsPatients.create({ doctors_iddoctors, patients_idpatients });
     res.status(201).json(newRelationship);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'An error occurred while creating the relationship.' });
   }
 };
@@ -171,19 +174,24 @@ const getAllRelationships = async (req, res) => {
 
 // Get a relationship by ID
 const getRelationshipById = async (req, res) => {
-  const relationshipId = req.params.id;
+  const { doctors_iddoctors, patients_idpatients } = req.params;
 
   try {
-    const relationship = await DoctorsPatients.findByPk(relationshipId);
+    const relationship = await DoctorsPatients.findOne({
+      where: { doctors_iddoctors, patients_idpatients }
+    });
+
     if (!relationship) {
       res.status(404).json({ error: 'Relationship not found.' });
     } else {
       res.status(200).json(relationship);
     }
   } catch (error) {
+    console.error('Error fetching relationship:', error); // Log the actual error
     res.status(500).json({ error: 'An error occurred while fetching the relationship.' });
   }
 };
+
 
 // Update a relationship by ID
 const updateRelationship = async (req, res) => {

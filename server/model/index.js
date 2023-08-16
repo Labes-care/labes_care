@@ -18,4 +18,6 @@ patient.belongsToMany(doctor, { through: DoctorsPatients, foreignKey: 'patients_
 
 
 
+
+
 module.exports=sequelize
