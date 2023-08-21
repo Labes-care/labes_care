@@ -1,9 +1,13 @@
 const express = require('express');
+const router = express.Router();
+
 const doctorController = require('../controller/Mobile');
 const patientController = require('../controller/Mobile');
 const doctorsPatientsController = require('../controller/Mobile');
 
-const router = express.Router();
+const authMiddleware = require('../middlewear/authMiddleware');
+const { register, login } = require('../controller/authControllerMobile');
+
 //! doctor 
 // Create a new doctor
 router.post('/doctors', doctorController.createDoctor);
@@ -45,12 +49,28 @@ router.post('/relationships', doctorsPatientsController.createRelationship);
 router.get('/relationships', doctorsPatientsController.getAllRelationships);
 
 // Get a relationship by ID
-router.get('/relationships/:id', doctorsPatientsController.getRelationshipById);
+router.get('/relationships/:doctors_iddoctors/:patients_idpatients', doctorsPatientsController.getRelationshipById);
 
 // Update a relationship by ID
 router.put('/relationships/:id', doctorsPatientsController.updateRelationship);
 
 // Delete a relationship by ID
 router.delete('/relationships/:id', doctorsPatientsController.deleteRelationship);
+
+//! login
+
+
+// Public route: Register a new patient
+router.post('/register', register);
+
+// Public route: Log in a patient
+router.post('/login', login);
+
+// Protected route: Example of a route that requires authentication
+router.get('/profile', authMiddleware, (req, res) => {
+  res.json({ message: 'Authenticated route', patientId: req.patient.id });
+});
+
+module.exports = router;
 
 module.exports = router;

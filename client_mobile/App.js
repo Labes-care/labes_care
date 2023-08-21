@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,6 +12,11 @@ import Chat from '../client_mobile/navigation/screens/chat';
 import AppointmentScreen from '../client_mobile/navigation/screens/AppointmentScreen'
 import DoctorDetailsScreen from '../client_mobile/navigation/screens/Doctordetail'; // Import the new component
 import Register from '../client_mobile/navigation/screens/Register' 
+import SchedulePage from './navigation/screens/SchedulePage';
+import Location from '../client_mobile/navigation/screens/Location';
+import WebViewScreen from '../client_mobile/navigation/screens/WebViewScreen'
+import { View} from 'react-native';
+
 
 import { AuthProvider } from './AuthContext';
 import { useAuth } from './AuthContext';
@@ -19,6 +24,7 @@ import { useAuth } from './AuthContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
 
 const CustomTabBarIcon = ({ name, color, size }) => {
   return (
@@ -40,6 +46,11 @@ const CustomTabBarIcon = ({ name, color, size }) => {
 };
 
 const HomeTabs = () => {
+
+  
+  const isAppointmentSet = true; 
+  
+
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -84,16 +95,35 @@ const HomeTabs = () => {
             ),
           }}
       />
-          <Tab.Screen
-            name="parameter"
-            component={Parameter}
-            options={{
-              headerShown: false,
-              tabBarIcon: ({ color, size }) => (
-                <CustomTabBarIcon name="gear" color={color} size={size} />
-              ),
-            }}
-          />
+         <Tab.Screen
+        name="parameter"
+        component={Parameter}
+        initialParams={{ isAppointmentSet }} // Pass the isAppointmentSet value as a parameter
+        options={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <View>
+              {/* Render a red dot based on the value of isAppointmentSet */}
+              {route.params.isAppointmentSet && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: -3,
+                    right: 50,
+                    width: 14,
+                    height: 14,
+                    backgroundColor: 'red',
+                    borderRadius: 16,
+                    zIndex: 1000,
+
+                  }}
+                />
+              )}
+              <CustomTabBarIcon name="gear" color={color} size={size} />
+            </View>
+          ),
+        })}
+      />
     </Tab.Navigator>
   );
 };
@@ -109,6 +139,11 @@ const App = () => {
         <Stack.Screen name="Appointmen" component={AppointmentScreen} />
         <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} initialParams={{ doctorId: 'doctor_id', patientId: 'patient_id'}} />
         <Stack.Screen name="register" component={Register} />
+        <Stack.Screen name="SchedulePage" component={SchedulePage} />
+        <Stack.Screen name="Location" component={Location} />
+        <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
     </AuthProvider>

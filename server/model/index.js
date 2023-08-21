@@ -22,6 +22,16 @@ doctor.belongsToMany(patient, { through: DoctorsPatients, foreignKey: 'doctors_i
 patient.belongsToMany(doctor, { through: DoctorsPatients, foreignKey: 'patients_idpatients' });
 
 
+DoctorsPatients.belongsTo(patient, { foreignKey: 'patients_idpatients' });
+
+
+
+
+
+
+
+
+
 doctor.belongsToMany(patient, { through: Chat, foreignKey: 'doctors_iddoctors' });
 patient.belongsToMany(doctor, { through: Chat, foreignKey: 'patients_idpatients' });
 
