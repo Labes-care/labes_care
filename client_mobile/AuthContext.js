@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const setMessageOptionValue = (option, hotspot) => {
     setMessageOption(option);
-    setHotspot(hotspot); // Set hotspot value
+    setHotspot(hotspot); 
   };
 
   return (

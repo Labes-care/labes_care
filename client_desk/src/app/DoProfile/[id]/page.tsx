@@ -21,6 +21,12 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'
+
+
+import CardMedia from '@mui/material/CardMedia';
+import {Doctor} from '../../../../componets';
+import {DoctorProfile} from '../../../../componets'
+
 import  {Dshboard}  from '../../../../componets';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -29,6 +35,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import './doprofil.css'
 import { CardMedia } from '@mui/material';
+
 
 const drawerWidth = 240;
 
@@ -322,7 +329,9 @@ export default function Page() {
 
         {activeContent === 'Settings' && (
           <Typography paragraph>
-            setting
+
+           <DoctorProfile/>
+
           </Typography>
         )}
 

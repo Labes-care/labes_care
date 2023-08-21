@@ -5,12 +5,19 @@ const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT||3003
 const cors = require("cors");
+const socket = require("socket.io");
+
+
+
+
+
 const doctorPofileRouter = require('./router/doctorProfile')
 const doctor = require ('./router/doctor')
 const events = require ('./router/event')
 const auth = require ('./router/auth')
 const DoProfile = require('./router/DoProfile')
 const admin = require('./router/admin')
+const adminDashboard = require('./router/adminDashboard')
 const payment = require ('./router/payment') 
 const doctorRoutes = require('./router/DoctormobileRoutes');
 
@@ -30,12 +37,16 @@ app.use("/doctor/event",events)
 app.use("/doctorProfile",doctorPofileRouter)
 app.use("/auth",auth)
 app.use("/admin",admin)
+app.use('/adminDashboard',adminDashboard)
 app.use('/flouci',payment)
 
 
 
 app.use("/",DoProfile)
 
+const server = app.listen(PORT, function () {
+  console.log(`Listening on port ${PORT}`);
+});
 
 
 sequelize.authenticate()
@@ -45,10 +56,10 @@ sequelize.authenticate()
   })//Keep it False if you are testing
   .then(() => {
     console.log('Models are synchronized with the database.');
-    app.listen(PORT, function () {
-      console.log(`Listening on port ${PORT}`);
-    });
+    server
   })
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
+
+ 
