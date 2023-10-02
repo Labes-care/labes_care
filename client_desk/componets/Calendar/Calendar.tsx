@@ -1,11 +1,12 @@
 "use client"
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './Calendar.css';
 import type { Dayjs } from 'dayjs';
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
+
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,8 +16,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";  
 import type { DatePickerProps } from 'antd';
-import { DatePicker, Space } from 'antd';
-
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -54,35 +53,9 @@ const currencies = [
     label: 'Friends',
   },
 ];
-const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-  console.log(date, dateString);
-};
 
-const getListData = (value: Dayjs) => {
-    let listData;
-    switch (value.date()) {
-      case 8:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' },
-          { type: 'success', content: 'This is usual event.' },
 
-        ];
-        break;
-      case 10:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' },
-        ];
-        break;
-      default:
-    }
-    return listData || [];
-  };
-  
-  const getMonthData = (value: Dayjs) => {
-    if (value.month() === 8) {
-      return 100;
-    }
-  };
+
   interface Props{
     title: string;
     category: string;
@@ -98,12 +71,68 @@ const CalendarComponent: React.FC = (Props) => {
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
   const [details, setDetails] = useState("");
+  const [data,setData]=useState([])
+  const [render,setRender]=useState(false)
+  // const [refresh, setRefresh] = useState<boolean>(false);
+// const getAllEvents = () => {                                              
+//   axios.get("http://localhost:3003/doctor/event/getAll")
+//       .then((res: any) => {
+//           console.log(res)
+//       })
+//       .catch((error :any) => {
+//         console.log(error);
+//       });
 
+// }
+
+
+useEffect(()=>{
+  fetchevents ()
+
+  },[])
+  const fetchevents = () => {
+      axios.get("http://localhost:3003/doctor/event/getAll")
+      .then( (res: any) =>{
+          console.log("data",res.data) 
+          setData(res.data)
+          setRender(!render)
+          
+      })
+      
+      .catch((error :any)=>{
+          console.log(error)
+      })
+  }
+const genrateObjDate=(type:string,content:string)=>{
+return {
+  type:type,
+  content:content
+}
+}
+
+const getListData = (value: Dayjs) => {
+  const dateString = value.format("YYYY-MM-DDTHH:mm:ss").substring(0,10);
+  console.log("Searching for date:", dateString);
+  const events = data.filter(item =>{ 
+    return item.date.substring(0,10) === dateString});
+  console.log("Matching events:", events);
+  return events.map(event => ({ type: 'success', content: event.title ,
+ }));
+};
+const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+  console.log(date, dateString);
+};
+
+const getMonthData = (value: Dayjs) => {
+  if (value.month() === 7) {
+    return 70;
+  }
+};
   const handleSubmit = () => {
-    console.log(title,category,date,details);
-    axios.post(`http://localhost:3000/doctor/event/Addevents${id}`, {
+    axios.post(`http://localhost:3003/doctor/event/Addevents/1`, {
+     
       title:title,
-      category:category,
+      category:"work",
       date:date,
       details:details
       })
@@ -116,7 +145,7 @@ const CalendarComponent: React.FC = (Props) => {
   };
   console.log("data",title,category,date,details);
   
-const handleChangeCategory =(e)=>{
+const handleChangeCategory = (e : any)=>{
   setCategory (e.target.value)
 }
             <Box>
@@ -164,7 +193,7 @@ const handleChangeCategory =(e)=>{
     <div className="size">
     <div className="notes-month">
     <section>{num}</section>
-    <span>Backlog number</span>
+    <span>number of appoitment</span>
     </div>
     </div>
     ) : null;
@@ -220,7 +249,6 @@ const handleChangeCategory =(e)=>{
           multiline
           maxRows={60}
         />
-
 </div>
 
 <TextField
@@ -236,19 +264,7 @@ const handleChangeCategory =(e)=>{
               {option.label}
             </MenuItem>
           ))}
-        </TextField>
-
-      
-  {/* <Space direction="vertical">
-    <DatePicker onChange={onChange} 
-    style={{ 
-       width : '220%',
-       height:'350%',
-       marginLeft:"25%",
-   }}
-    />
-    </Space>  */}
-
+</TextField>
 
 <TextField
  value={date}
@@ -258,27 +274,23 @@ const handleChangeCategory =(e)=>{
           multiline
           maxRows={60}
         />
-
-
-
-
 </Box>
-
 <textarea 
 value={details}
 onChange={(e) => setDetails(e.target.value)}
 style={{  
-  marginLeft:"15%",
+  marginLeft:"5%",
   marginTop:"5%",
   width:300,
-  height:100
-
+  height:100,
+  maxWidth:"80%",
+  maxHeight:"30%"
   }}
   placeholder='Event Details'>
 </textarea>
-
 <div>
-      <Button className="button"  onClick={ () => {handleSubmit()}} style={{
+      <Button className="button" onClick={ () => { handleSubmit()}} 
+      style={{
          background: "#e4e4e4",
          marginTop:"10%",
          marginLeft:"12%",
@@ -300,13 +312,11 @@ style={{
       </svg>
       <span className="label" style={{color:"#90a4ae"}}>Add to Calendar</span>
     </Button>
-
     <Button className="button" onClick={handleClose} style={{
          background: "#f12d2d",
          marginTop:"10%",
          marginLeft:"5%",
-         width:"21%"
-         
+         width:"21%",
       }}
       >
       <span className="label" 
@@ -314,7 +324,6 @@ style={{
         color:"#f5f5f5",
     alignItems:"center"
     }}>
-      
        Cancel 
       </span>
     </Button>
@@ -330,7 +339,7 @@ style={{
       marginTop: '2%',
         }}
       >
-        <Calendar cellRender={cellRender} />
+        { render ? <Calendar cellRender={cellRender} /> :  null }
       </div>
     </div>
   );

@@ -1,16 +1,32 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
 import './dashboard.css'
 import { Box } from '@mui/material';
 import { useState,useEffect } from 'react'
+import Button from '@mui/material/Button';
 
+
+interface Column {
+    id: 'profile_img' |'fullname' | 'availability';
+    label: string|number;
+    align?: 'right';
+    format?: (value: number) => string;
+  }
+  
+  const columns: readonly Column[] = [
+    { id: 'profile_img', label: '#'},
+    { id: 'fullname', label: 'Doctor Name'  },
+    { id: 'availability', label: 'Status' },
+  ];
 interface doctor {
     id: number,
     fullname: string,
@@ -23,11 +39,12 @@ interface doctor {
     cover_img: string,
     address: string,
     certificate_img: string
+    availability:number
 }
 
 export default function DoctorList() {
-    const [doctors, setDoctors] = useState<doctor | null>([]);
-
+    const [doctors, setDoctors] = useState<doctor[]>([]);
+    
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
@@ -45,35 +62,50 @@ export default function DoctorList() {
         fetchDoctors();
     }, []);
     return (
-        <Box className="DoctorList">
-            <List sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}>
-                {doctors.map((doctor) => (
-                    <React.Fragment key={doctor.id}>
-                        <ListItem alignItems="center">
-                            <ListItemAvatar>
-                                <Avatar alt={doctor.fullname} src={doctor.profile_img} />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={doctor.fullname}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                            {doctor.speciality}
-                                        </Typography>
-                                        {" — " + doctor.email}
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                    </React.Fragment>
+        
+
+        <Paper className='paper' sx={{ width: '35%', overflow: 'hidden', background: '#fff', border: 'none', color: '#fff', boxShadow: '0 0 10px #86868633' }}>
+            <h3 className='titli' >Doctors List</h3>
+        <TableContainer className='tablecontainer'  sx={{ maxHeight: 440, background: 'transparent' }}>
+          <Table className='tablecontainer' stickyHeader aria-label="sticky table" >
+            <TableHead>
+              <TableRow  className='columns' >
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    sx={{  background: '#adadad !important' }}
+                  >
+                    {column.label}
+                  </TableCell>
                 ))}
-            </List>
-        </Box>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {doctors.map((row) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={row.id} sx={{ color: 'black' }}>
+                <TableCell align="center">
+                  <img src={row.profile_img} alt={row.fullname} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+                </TableCell>
+                <TableCell align="center">{row.fullname}</TableCell>
+                <TableCell key="availability" align="center">
+                    {row.availability === 0 ? (
+                     <Button variant="outlined" color="success">
+                     Available
+                   </Button>
+                    ) : (
+                      <Button variant="outlined" color="error">
+                      Absend
+                    </Button>
+                    )}
+                  </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          </Table>
+        </TableContainer>
+       
+      </Paper>
+
     );
 }

@@ -1,62 +1,62 @@
 .events {
-    margin: 5;
-    padding: 50;
-    list-style: none;
-  }
-  .events .ant-badge-status {
-    width: 100%;
-    overflow: hidden;
-    font-size: 12px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .notes-month {
-    font-size: 28px;
-    text-align: center;
-  }
-  .notes-month section {
-    font-size: 28px;
-  }
-  
+  margin: 5;
+  padding: 50;
+  list-style: none;
+}
+.events .ant-badge-status {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.notes-month {
+  font-size: 28px;
+  text-align: center;
+}
+.notes-month section {
+  font-size: 28px;
+}
 
-  .button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 9px 12px;
-  gap: 8px;
-  height: 40px;
-  width: 201px;
-  border: none;
-  background: blue;
-  border-radius: 20px;
-  cursor: pointer;
+
+.button {
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 9px 12px;
+gap: 8px;
+height: 40px;
+width: 201px;
+border: none;
+background: blue;
+border-radius: 20px;
+cursor: pointer;
 }
 
 .lable {
-  line-height: 22px;
-  font-size: 17px;
-  color:blue;
-  font-family: sans-serif;
-  letter-spacing: 1px;
+line-height: 22px;
+font-size: 17px;
+color:blue;
+font-family: sans-serif;
+letter-spacing: 1px;
 }
 
 .button:hover {
-  background: blue;
+background: blue;
 }
 
 .button:hover .svg-icon {
-  animation: slope 1s linear infinite;
+animation: slope 1s linear infinite;
 }
 
 @keyframes slope {
-  0% {
-  }
+0% {
+}
 
-  50% {
-    transform: rotate(10deg);
-  }
+50% {
+  transform: rotate(10deg);
+}
 
-  100% {
-  }
+100% {
+}
 }

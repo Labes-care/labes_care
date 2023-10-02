@@ -1,3 +1,6 @@
+.dashboard{
+    position: relative;
+}
 .cards {
     display: flex;
     color: white;
@@ -17,63 +20,176 @@
 }
 
 .card1 {
-    background: linear-gradient(to left, #3a7bd5, #3a6073)!important;
+    background: radial-gradient(827px at 47.3% 48%, rgba(230, 105, 105, 0) 0%, rgb(0 88 255) 90%);
+    border: 1px solid #7e7e7e4a;
+    
 }
 .card2{
-    background: linear-gradient(to right,#c33764,#1d2671)!important;
+    background:radial-gradient(827px at 47.3% 48%, rgba(230, 105, 105, 0) 0%, rgb(0 88 255) 90%);
+    border: 1px solid #7e7e7e4a;
 }
 .card3{
-    background: linear-gradient(to left,#134e5e,#71b280)!important;
+    background:radial-gradient(827px at 47.3% 48%, rgba(230, 105, 105, 0) 0%, rgb(0 88 255) 90%);
+    border: 1px solid #7e7e7e4a;
 }
 .tableContainer {
     position: relative;
-    left: 1%;
+    left: 2%;
     top: 9%;
-    background-color: rgb(255, 255, 255);
-    width: 62%;
-    margin-top: -15%;
-    box-shadow: 3px 7px 14px 0 #6f6f6fba;
+    width: 59%;
+    margin-top: -37%;
     border-radius: 1%;
+    border: none;
+    box-shadow: 0 0 10px #86868633;  
+    padding-top: 2%;
+      background-color: #fff;
+      border: 1px solid #f2f4f9;
 }
+
 
 .chart {
     position: relative;
     left: -3%;
-    padding-top: -0%;
-    padding-bottom: 4%;
-    background-color: rgb(255, 255, 255);
-    width: 62%;
+    padding-top: 2%;
+    background-color: #fff;
+    width: 59%;
     border-radius: 1%;
     box-shadow: 3px 7px 14px 0 #6f6f6fba;
     display: flex;
-    margin: 4%;
+    margin: 5%;
+    background: #fff;
+    border: none;
+    color: #96a2b4;
+    box-shadow: 0 0 10px #86868633;
+    border: 1px solid #f2f4f9;
 }
 .Piechart{
     position: relative;
-    left: 66%;
-    top: 50%;
+    left: 64%;
+    top: 57%;
     background-color: rgb(255, 255, 255);
-    box-shadow: 3px 7px 14px 0 #6f6f6fba;
     display: flex;
     border-radius: 1%;
     width: 34%;
-    margin-top: -135mm;
-    padding: 4%;
+    margin-top: -132mm;
+    padding: 2%;
+    background: #fff;
+    border: none;
+    color: #96a2b4;
+    box-shadow: 0 0 10px #86868633;
+    border: 1px solid #f2f4f9;
 }
-.DoctorList{
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 9;
+    }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+.totalPie{
+    position: absolute;
+    left: 96mm;
+    top: 88%;
+    color: #373737;
+
+}
+.numberPie{
+    position: absolute;
+    left: 110mm;
+    top: 88%;
+    color: #2a2a2a;
+}
+.paper{
     position: relative;
-    left: 66%;
+    left: 239mm;
     top: 154%;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 3px 7px 14px 0 #6f6f6fba;
     display: flex;
     border-radius: 1%;
     width: 34%;
     padding: 3%;
-    margin-top: 3%
+    margin-top: 3%;
 }
+.tablecontainer{
+    position: relative;
+}
+.titli{
+    position: absolute;
+    top: 1% !important;
+    left: 35%;
+    color: #525252;
+}
+
 .fileplace{
     position: relative;
     left: 0%;
     
 }
+.line{
+    width: 0%;
+    height: 0%;
+}
+.headerLine{
+    position: absolute;
+    display: inline-block;
+    top: 0%;
+    left: 35%;
+    color: #525252;
+}
+.button-name {
+    align-items: center;
+    appearance: none;
+    background-color: #afa4a43d;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px,rgba(45, 35, 66, 0.15) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 8px;
+   }
+   
+   .button-name:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+   }
+   
+   .button-name:hover {
+    box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+   }
+   
+   .button-name:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+   }
+   .columns{
+color: #134e5e;
+   }
+   .numb{
+    position: relative;
+    left: 94%;
+    
+   }

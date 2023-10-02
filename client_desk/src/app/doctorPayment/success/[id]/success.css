@@ -53,13 +53,13 @@
   
   #success-box {
     position: absolute;
-    width: 99%;
-    height: 100%;
-    left: 1%;
-    top: 0%;
+    width: 34%;
+    height: 85%;
+    left: 33%;
+    top: 7%;
     background: linear-gradient(to bottom right, #b6ffd4 40%, #98bda7 100%);
     border-radius: 6px;
-    box-shadow: 4px 8px 16px 0 #007bff17;
+    box-shadow: 4px 8px 16px 0 #007bff00;
     perspective: 40px;
   }
   

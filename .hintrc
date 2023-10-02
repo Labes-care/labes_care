@@ -17,6 +17,18 @@
           "backdrop-filter"
         ]
       }
+    ],
+    "no-inline-styles": "off",
+    "detect-css-reflows/composite": "off",
+    "detect-css-reflows/paint": "off",
+    "disown-opener": "off",
+    "axe/text-alternatives": "off",
+    "meta-viewport": "off",
+    "axe/forms": [
+      "default",
+      {
+        "label": "off"
+      }
     ]
   }
 }

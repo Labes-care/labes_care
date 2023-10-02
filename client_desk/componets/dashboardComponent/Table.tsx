@@ -7,61 +7,100 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation';
+import './dashboard.css'
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
 
-function createData(
-  image:string,
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { image,name, calories, fat, carbs, protein };
+
+interface apointment{
+  id: number,
+  date: number,
+  time: number,
+  message: string,
+  Patient: {
+    fullname: string,
+    profile_img: string,
+    gender:string
   }
+}
 
-  const rows = [
-    createData('pdp','Frozen yoghurt', 159, 6.0, 24,23),
-    createData('pdp','Ice cream sandwich', 237, 9.0, 37,56),
-    createData('pdp','Eclair', 262, 16.0, 24,78),
-    createData('pdp','Cupcake', 305, 3.7, 67,486),
-    createData('pdp','Gingerbread', 356, 16.0, 49,45),
-  ];
 
 export default function TableAppointment() {
+  const [appointments, setAppointments] = useState<apointment[]>([]);
+  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((previousOpen) => !previousOpen);
+  };
+
+  const canBeOpen = open && Boolean(anchorEl);
+  const id = canBeOpen ? 'transition-popper' : undefined;
+
+  const searchParams = useParams()
+
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
+
+  const fetchAppointments = async () => {
+    if (!searchParams.id) return
+    try {
+      const response = await axios.get(`http://localhost:3003/appointment/${searchParams.id}`); // Replace with your API endpoint
+      setAppointments(response.data);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+    }
+  };
   return (
-    <Box className='tableContainer'>
-      Today Appointment
-       <TableContainer  className='table' component={Paper}>
-      <Table sx={{ minWidth: 850 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell >#</TableCell>
-            <TableCell  align="left">Patient Name</TableCell>
-            <TableCell  align="left">gender</TableCell>
-            <TableCell  align="left">Last Visit</TableCell>
-            <TableCell  align="left">Carbs&nbsp;(g)</TableCell>
-            <TableCell  align="left">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.image}
-              </TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell  align="left">{row.calories}</TableCell>
-              <TableCell  align="left">{row.fat}</TableCell>
-              <TableCell  align="left">{row.carbs}</TableCell>
-              <TableCell  align="left">{row.protein}</TableCell>
+      <Box className='tableContainer black-background'>
+        <TableContainer  className='table' component={Paper} sx={{ background: '#fff' }}>
+        <Table  sx={{ minWidth: 850 }} aria-label="simple table">
+        <h3 className='headerLine'>Appointment</h3>
+          <TableHead>
+            <TableRow>
+              <TableCell >#</TableCell>
+              <TableCell  align="left">Patient Name</TableCell>
+              <TableCell  align="left">gender</TableCell>
+              <TableCell  align="left">date</TableCell>
+              <TableCell  align="left">time</TableCell>
+              <TableCell  align="left">message</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </Box>
+          </TableHead>
+          <TableBody>
+            {appointments.map((apoi) => (
+              <TableRow
+                key={apoi.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                <img src={apoi.Patient.profile_img} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+                </TableCell>
+                <TableCell align="left"> {apoi.Patient.fullname}</TableCell>
+                <TableCell  align="left">{apoi.Patient.gender}</TableCell>
+                <TableCell  align="left">{apoi.date}</TableCell>
+                <TableCell  align="left">{apoi.time}</TableCell>
+                <TableCell  align="left"><button role="button" className="button-name" aria-describedby={id} type="button" onClick={handleClick}>
+          click here
+        </button>
+        <Popper id={id} open={open} anchorEl={anchorEl} transition>
+          {({ TransitionProps }) => (
+            <Fade {...TransitionProps} timeout={350}>
+              <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+              {apoi.message}
+              </Box>
+            </Fade>
+          )}
+        </Popper></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      </Box>
   )
 }
