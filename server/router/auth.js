@@ -5,7 +5,7 @@ const Doctor=require('../model/doctor')
 const multer = require('multer');
 const upload = multer(); 
 const cloudinary = require('cloudinary').v2;
-
+const axios = require("axios");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -74,8 +74,11 @@ router.post('/doctors', upload.fields([{ name: 'certificate_img' }, { name: 'cin
         // profile_img: profileimg.secure_url,
         // cover_img: coverimg.secure_url,
       });
+
+
   
       res.status(201).json({ message: 'Doctor created successfully' });
+
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });

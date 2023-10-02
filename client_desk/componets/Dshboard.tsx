@@ -12,7 +12,7 @@ import HouseOutlinedIcon from '@mui/icons-material/HouseOutlined';
 
 export default function Dshboard() {
   return (
-    <div>
+    <div className='dashboard'>
       <h2 className='fileplace'>Doctor Dashboard <ArrowForwardIosIcon/> <HouseOutlinedIcon/> Dashboard </h2>
     <div>
       

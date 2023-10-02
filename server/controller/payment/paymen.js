@@ -8,10 +8,10 @@ module.exports = {
         const payload = {
             "app_token": "33bae034-d627-4c9c-a1db-614b4031cbc3", 
             "app_secret": process.env.FLOUCI_SECRET,
-            "amount": req.body.amount,
+            "amount": req.body.cost,
             "accept_card": "true",
             "session_timeout_secs": 1200,
-            "success_link": "http://localhost:3000/doctorPayment/success",
+            "success_link": `http://localhost:3000/doctorPayment/success/${req.params.id}/`,
             "fail_link": "http://localhost:3000/doctorPayment/fail",
             "developer_tracking_id": "471f5e36-a4f1-4c8e-9877-5e6ae7cd99fb"
         }
@@ -19,7 +19,7 @@ module.exports = {
             const result = await axios.post(url, payload)
             const paymentLink = result.data.result
     
-            res.json({ success: true, link: paymentLink })
+            res.json({ success: true, link: paymentLink ,payment_id: result.data.result.id  })
 
 //////////////////////////////
 const doctorId = req.params.id;
@@ -35,7 +35,7 @@ if (pay_type === 'monthly') {
 }
 
 const newPayment = await Payment.create({
-    amount: req.body.amount,
+    amount: req.body.cost,
     paymentDate: new Date(),
     expirationDate: expirationDate,
     pay_type: pay_type,
@@ -63,7 +63,7 @@ const newPayment = await Payment.create({
                 }
             });
             console.log(response.data);
-res.json(response.data); 
+res.json(response.data,{doctorId: response.data.doctors_iddoctors}); 
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'An error occurred while verifying payment.' });

@@ -17,5 +17,15 @@ AddEvents:(req,res)=>{
     .catch((err) => {
         res.status(500).send(err);
       });
-}
+},
+getEvents : (req,res) => {
+     Event.findAll()
+     .then((event) => {
+      res.status(200).json(event);
+     })
+    .catch(() => {
+      console.error(err);
+      res.status(500).json({ err: 'No event found' });
+    })
+  }
 }

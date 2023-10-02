@@ -6,20 +6,45 @@ import { useParams } from 'next/navigation'
 import '../../../DoctorSignUp/signup.css'
 
 
+interface SubscriptionOptionProps {
+  i: number;
+  cost: number;
+  grad: string;
+  pay_type: string;
+  handlePayment: (cost: number, pay_type: string) => void;
+}
 
-export default function Page() {
+const SubscriptionOption = ({ i, cost, grad, pay_type,handlePayment }: SubscriptionOptionProps) => (
+  <article
+  style={{
+    '--i': i,
+    '--cost': cost,
+    '--grad': grad,
+  } as React.CSSProperties}
+>
+    <header>
+      <h3 data-name={pay_type}></h3>
+    </header>
+    <section>
+      <button onClick={() => handlePayment(cost, pay_type)}>Sign up</button>
+    </section>
+  </article>
+);
+
+
+export default function Page(): React.JSX.Element {
   const [paymentStatus, setPaymentStatus] = useState('');
 
   const searchParams = useParams()
 
-  const handlePayment = async (amount: number, pay_type: string) => {
+  const handlePayment = async (cost: number, pay_type: string) => {
     try {
       const response = await fetch(`http://localhost:3003/flouci/payment/${searchParams.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ amount, pay_type }),
+        body: JSON.stringify({ cost, pay_type }),
       });
 
 
@@ -31,6 +56,7 @@ export default function Page() {
 
         const paymentId = data.link.payment_id;
         const link = data.link.link
+        localStorage.setItem('payment_id', paymentId);
         window.location.href = link
 
         // Now use the verify_payment API
@@ -44,11 +70,12 @@ export default function Page() {
         const verifyData = await verifyResponse.json();
 
         if (verifyData.success) {
-          console.log(verifyData.success);
+          console.log(verifyData);
 
           setPaymentStatus('success');
         } else {
           setPaymentStatus('fail');
+
         }
       } else {
         setPaymentStatus('fail');
@@ -59,71 +86,41 @@ export default function Page() {
     }
   };
 
+  const subscriptionData = [
+    { pay_type: 'monthly', amount: 9545, grad: '#0fcf7b, #0c9f30' },
+    { pay_type: 'quarterly', amount: 191111, grad: '#f7256e, #cc0c48' },
+    { pay_type: 'annual', amount: 29000, grad: '#f7ea1f, #f87d2c' },
+  ];
+
   return (
 
-    <div className="center-container">
-      <div className="float-container">
-        <div className="float-child float-child1">
-          <div className="centered">
-            <div className="frame">
-              <figure>
-                <div className="image-1"></div>
-                {/* Loop for image-2 */}
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div key={index} className="image-2"></div>
-                ))}
-              </figure>
-            </div>
-          </div>
-        </div>
 
-        <div className="float-child float-child2">
-          <div className="centered">
-            <div className="container">
-              <a className='card1' onClick={() => handlePayment(500, 'monthly')}>
-                <h3>This is option 1</h3>
-                <p className="small">
-                  payment monthly
-                </p>
-                <h3>500 $</h3>
-                <div className="go-corner">
-                  <div className="go-arrow">→</div>
-                </div>
-              </a>
-
-              <a className='card2' onClick={() => handlePayment(1500, 'quarterly')}>
-                <h3>This is option 2</h3>
-                <p className="small">
-                  payment quarterly
-                </p>
-                <h3>1500 $</h3>
-                <div className="go-corner">
-                  <div className="go-arrow">→</div>
-                </div>
-              </a>
-
-              <a className='card4' onClick={() => handlePayment(4000, 'annual')}>
-                <h3>This is option 3</h3>
-                <p className="small">
-                  payment annual
-                </p>
-                <h3>4000 $</h3>
-                <div className="go-corner">
-                  <div className="go-arrow">→</div>
-                </div>
-              </a>
+    <body style={{ '--n':subscriptionData.length}as React.CSSProperties}>
+    {subscriptionData.map((c, i) => (
+      <SubscriptionOption
+        key={i}
+        i={i}
+        cost={c.amount}
+        grad={c.grad}
+        pay_type={c.pay_type}
+        handlePayment={handlePayment}
+      />
+    ))}
 
               {paymentStatus === 'success' && (
                 <div className="alert alert-success">Payment successful!</div>
-              )}
+                )}
               {paymentStatus === 'fail' && (
                 <div className="alert alert-danger">Payment failed.</div>
-              )}
+                )}
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                </body>
+     
   )
 }
+
+
+
+
+
+

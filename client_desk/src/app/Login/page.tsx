@@ -52,7 +52,6 @@ export default function Page() {
   const router = useRouter();
 
 
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 
 
@@ -123,26 +122,10 @@ export default function Page() {
  
   return (
 
-    <div className="center-container">
-      <div className="float-container">
-        <div className="float-child float-child1">
-          <div className="centered">
-            <div className="frame">
-              <figure>
-                <div className="image-1"></div>
-                {/* Loop for image-2 */}
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div key={index} className="image-2"></div>
-                ))}
-              </figure>
-            </div>
-          </div>
-        </div>
-
-        <div className="float-child float-child2">
-          <div className="centered">
+        <div className="form_main">
+          <div>
             <ThemeProvider theme={defaultTheme}>
-              <Container component="main" maxWidth="xs">
+              <Container component="main" maxWidth="xs" className='contanair'>
                 <CssBaseline />
                 <Box
                   sx={{
@@ -218,13 +201,10 @@ export default function Page() {
                     </Grid>
                   </Box>
                 </Box>
+          <Copyright sx={{ mt: 5 }} className='copyright' />
               </Container>
             </ThemeProvider>
           </div>
-          <Copyright sx={{ mt: 5 }} className='copyright' />
         </div>
-      </div>
-
-    </div>
   )
 }

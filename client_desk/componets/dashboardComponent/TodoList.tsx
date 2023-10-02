@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './todo.css'
+import { Button } from '@mui/material';
 
 
 interface Task {
@@ -168,9 +169,6 @@ const TodoList = () => {
     <div className="container">
       <ToastContainer />
       <div className="todo-app">
-        <h2>
-          {/* <img src={todoImage} alt="todo-image" /> Todo List */}
-        </h2>
         <div className="row">
           <i className="fas fa-list-check"></i>
           <input
@@ -189,8 +187,8 @@ const TodoList = () => {
 
         <div className="mid">
           <i className="fas fa-check-double"></i>
-          <button id="complete-all" onClick={handleCompleteAll}>Complete all tasks</button>
-          <button id="clear-all" onClick={handleClearCompleted}>Delete comp tasks</button>
+          <Button variant="outlined" id="complete-all" onClick={handleCompleteAll}>Complete all tasks</Button>
+          <Button variant="outlined" id="clear-all" onClick={handleClearCompleted}>Delete comp tasks</Button>
         </div>
 
         <ul id="list">
@@ -206,7 +204,7 @@ const TodoList = () => {
               />
               <label htmlFor={`task-${task.id}`}>{task.title}</label>
               <div>
-                {/* <img
+                <img
                   src="https://cdn-icons-png.flaticon.com/128/1159/1159633.png"
                   className="edit"
                   data-id={task.id}
@@ -217,7 +215,7 @@ const TodoList = () => {
                   className="delete"
                   data-id={task.id}
                   onClick={() => handleDeleteTask(task.id)}
-                /> */}
+                />
               </div>
             </li>
           ))}
@@ -227,13 +225,13 @@ const TodoList = () => {
             <div className="dropdown">
               <button className="dropbtn">Filter</button>
               <div className="dropdown-content">
-                <a href="#" id="all" onClick={() => handleFilterChange('all')}>
+                <a  id="all" onClick={() => handleFilterChange('all')}>
                   All
                 </a>
-                <a href="#" id="rem" onClick={() => handleFilterChange('uncompleted')}>
+                <a id="rem" onClick={() => handleFilterChange('uncompleted')}>
                   Uncompleted
                 </a>
-                <a href="#" id="com" onClick={() => handleFilterChange('completed')}>
+                <a  id="com" onClick={() => handleFilterChange('completed')}>
                   Completed
                 </a>
               </div>

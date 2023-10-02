@@ -1,24 +1,76 @@
 
+.nameAnchor{
+    position: absolute;
+    left: -276%;
+    top: 33%;
+    color: #e2e4e4;
+}
 .avatar{
     position: absolute;
     left: 95%;
     
 }
+
 .carteimageDashoard{
     box-shadow: 3px 7px 14px 0 #6f6f6fba;
     top: 8%;
-    margin-bottom: 39%;
+    margin-right: -25%;
     border-radius: 8%;
-    left: -27%;
+    left: 22%;
     position: relative;
+    margin-bottom: 35%;
+    /* margin-top: 0%; */
 }
 .listAppBar{
-    position: absolute;
+    position: relative;
     
-    top: 10%;
+    top: 0%;
 }
 .listAppBar2{
-    position: absolute;
-    
-    top: 10%;
+    position: relative;
+
+    top: 30%;
 }
+.list{
+    color: rgb(109, 108, 112) !important;
+}
+
+.bodyy{
+    background-color: #f0f3fb;
+}
+.AppBar{
+    background: #5e9cffe6!important;
+   
+    box-shadow: 0 1px 5px 3px 0 10px #b7c0ce33;
+}
+.drawerCustomColor {
+    background-color:#ffffff;
+    border-right: 1px solid #f2f4f9 !important;
+    box-shadow: 0 8px 10px #b7c0ce33 !important;
+  }
+  .customDrawer {
+    color: #2b5dd0;
+  }
+  .name{
+    position: relative;
+    left: -1%;
+    top: 25%;
+    color: rgb(147, 146, 146);
+    font-variant: small-caps;
+  }
+  .nameDoctor{
+    position: relative;
+    left: -41%;
+    top: 40%;
+    color: rgb(130, 130, 130);
+  }
+  .labes{
+    font-variant: common-ligatures tabular-nums !important;
+  }
+  .fullscreen{
+    color: #ffffff !important;
+  }
+
+  .iconlabess{
+    max-width: 50%;
+  }

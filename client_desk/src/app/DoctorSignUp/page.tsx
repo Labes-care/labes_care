@@ -201,32 +201,17 @@ export default function Page({ doctorId }: Props) {
   }, [fullname, email, password, cin, certificateImg, speciality, phonenumber, address, activeStep]);
 
   return (
-    <div className="center-container">
-      <div className="float-container">
-        <div className="float-child float-child1">
-          <div className="centered">
-            <div className="frame">
-              <figure>
-                <div className="image-1"></div>
-                {/* Loop for image-2 */}
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div key={index} className="image-2"></div>
-                ))}
-              </figure>
-            </div>
-          </div>
-        </div>
 
-        <div className="float-child float-child2">
-          <div className="centered">
-            <ThemeProvider theme={defaultTheme}>
-              <Container component="main" maxWidth="xs">
+        <div className="form_main">
+          <div >
+            <ThemeProvider theme={defaultTheme} >
+              <Container component="main" maxWidth="xs" className='contanair'>
                 <CssBaseline />
 
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                  <LockOutlinedIcon />
+                <Avatar className='avatar' sx={{ m: 1, color: 'secondary.main' }}>
+                  <LockOutlinedIcon  />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography className="heading" component="h1" variant="h5">
                   Sign up
                 </Typography>
 
@@ -334,7 +319,7 @@ export default function Page({ doctorId }: Props) {
                         <br />
 
                         <Grid item xs={12}>
-                          <label htmlFor="cin" className="file-input-label">
+                          <label htmlFor="cin" className="file-input-label" >
                             Upload your certeficate
                             <input type="file"
                               id="certificate_img"
@@ -480,14 +465,11 @@ export default function Page({ doctorId }: Props) {
 
                 </Box >
 
+          <Copyright sx={{ mt: 5 }} className='copyright' />
               </Container>
             </ThemeProvider>
           </div>
-          <Copyright sx={{ mt: 5 }} className='copyright' />
         </div>
-      </div>
-
-    </div>
 
   )
 }

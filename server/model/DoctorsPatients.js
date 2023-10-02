@@ -28,4 +28,4 @@ const DoctorsPatients = sequelize.define('DoctorsPatients', {
 });
 
 
-module.exports = DoctorsPatients;
+module.exports = DoctorsPatients; 

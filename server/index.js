@@ -5,7 +5,8 @@ const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT||3003
 const cors = require("cors");
-const socket = require("socket.io");
+const socketIo = require("socket.io");
+const http = require("http");
 
 
 
@@ -26,6 +27,13 @@ app.use(express.json());
 app.use(cors()); 
 
 
+const server = http.createServer(app);
+const io = socketIo(server)
+
+server.listen(PORT, function () {
+  console.log(`Listening on port ${PORT}`);
+});
+
 app.use('/',doctorRoutes);
 app.use('/',doctorRoutes);
 app.use('/',doctorRoutes);
@@ -44,9 +52,6 @@ app.use('/flouci',payment)
 
 app.use("/",DoProfile)
 
-const server = app.listen(PORT, function () {
-  console.log(`Listening on port ${PORT}`);
-});
 
 
 sequelize.authenticate()
@@ -62,4 +67,25 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', error);
   });
 
- 
+
+
+  io.on("connection", (socket) => {
+    console.log("A user connected");
+  
+    socket.on("disconnect", () => {
+      console.log("A user disconnected");
+    }); 
+  
+    // Handle user joining a room
+    socket.on("user_joined", ({ type, id }) => {
+      socket.join(`room_${type}_${id}`);
+      console.log(`User joined room: room_${type}_${id}`);
+    });
+  
+    // Handle real-time chat messages
+    socket.on("send_message", (data) => {
+      // Send the message to the appropriate room
+      const { type, id } = data;
+      io.to(`room_${type}_${id}`).emit("receive_message", data);
+    });
+  });
