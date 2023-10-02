@@ -1,20 +1,127 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useAuth } from 'client_mobile/AuthContext.js'
-import axios from 'axios'
-import Parameter from './Parameter'
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useAuth } from 'client_mobile/AuthContext.js';
+import axios from 'axios';
+import Parameter from './Parameter';
+import { useNavigation } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
 
 
 const HomeScreen = () => {
   const { patientId } = useAuth();
   const [patientData, setPatientData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const navigation = useNavigation(); // Get the navigation object
+  const [doctors, setDoctors] = useState([]);
+  const [isLoadingDoctors, setIsLoadingDoctors] = useState(true);
+  const navigation = useNavigation();
 
+  const [data2, setData2] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
+
+  const handleDoctorPress = (doctorId) => {
+    navigation.navigate('DoctorDetails', { doctorId });
+  };
+
+
+
+
+  useEffect(() => {
+    const fetchData2 = async () => {
+      try {
+        const response = await axios.get('http://192.168.30.250:3003/doctors');
+        const apiData = response.data; // Assuming the API response contains the image URLs
+        setData2(apiData);
+      } catch (error) {
+        console.error('Error fetching images from API:', error);
+      }
+    };
+    fetchData2();
+  }, []);
+
+  console.log(data2)
+
+
+
+
+  const handleSearchChange = (text) => {
+    setSearchText(text);
+
+    const dummySuggestions = [
+      "Appointment",
+  "Anesthesiologist",
+  "Clinic",
+  "Cardiology",
+  "Checkup",
+  "Consultation",
+  "Diagnosis",
+  "Dermatology",
+  "Examination",
+  "Emergency",
+  "Follow-up",
+  "Family Medicine",
+  "Gynecology",
+  "Gastroenterology",
+  "Hospital",
+  "Hematology",
+  "Immunization",
+  "Intensive Care",
+  "Joint Pain",
+  "Joint Specialist",
+  "Knee Surgery",
+  "Kidney Specialist",
+  "Laboratory",
+  "Laparoscopy",
+  "Medication",
+  "Medical Imaging",
+  "Neurology",
+  "Nephrology",
+  "Orthopedics",
+  "Oncology",
+  "Patient",
+  "Pediatrics",
+  "Quality Care",
+  "Quick Recovery",
+  "Radiology",
+  "Rehabilitation",
+  "Surgeon",
+  "Surgery",
+  "Treatment",
+  "Therapy",
+  "Ultrasound",
+  "Urgent Care",
+  "Vaccination",
+  "Vision Specialist",
+  "Waiting Room",
+  "Wellness",
+  "X-ray",
+  "Xerostomia (dry mouth)",
+  "Yoga Therapy",
+  "Youth Health",
+  "Zoonosis (disease spread from animals)",
+  "Zinc Supplement"
+    ];
+
+    setSuggestions(dummySuggestions.filter(suggestion =>
+      suggestion.toLowerCase().includes(text.toLowerCase())
+      
+    ));
+    setIsSuggestionsVisible(true);
+
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(suggestion)}`;
+    navigation.navigate('WebViewScreen', { url: googleSearchUrl });
+  };
+
+  
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,11 +137,6 @@ const HomeScreen = () => {
     };
     fetchData();
   }, [patientId]);
-
-  console.log(patientData)
-  
-
-
 
 
   const profileImageUri = patientData.profile_img;
@@ -53,6 +155,7 @@ const HomeScreen = () => {
     { id: '11', imageUri: require('../screens/models/112.png'), isLighten: false },
     { id: '12', imageUri: require('../screens/models/blood.png'), isLighten: false },
   ];
+
   const data1 = [
     { id: '1', imageUri: 'https://via.placeholder.com/150', isLighten: false },
     { id: '2', imageUri: 'https://via.placeholder.com/150', isLighten: false },
@@ -78,6 +181,20 @@ const HomeScreen = () => {
 
   const [lightenIndex, setLightenIndex] = useState(-1);
 
+  const handleSearchContainerPress = () => {
+    setIsSuggestionsVisible(false);
+  };
+
+  const handleSearchBarFocus = () => {
+    setIsSuggestionsVisible(true);
+  };
+
+  const handleSearchBarBlur = () => {
+    setTimeout(() => {
+      setIsSuggestionsVisible(false);
+    }, 200);
+  };
+
  
   return (
     <View style={styles.container}>
@@ -97,16 +214,35 @@ const HomeScreen = () => {
           <Text style={styles.messageText}>Keep taking care of your health</Text>
 
           <BlurView intensity={80} tint="light" style={styles.blurContainer}>
-            <View style={styles.searchBarContainer}>
-              <Icon name="search" size={20} color="#FFFFFF" style={styles.searchIcon} />
-              <TextInput
-                style={styles.searchBar}
-                placeholder="Search anything here ..."
-                placeholderTextColor="#FFFFFF"
-              />
-            </View>
-          </BlurView>
+              <TouchableOpacity activeOpacity={1} style={styles.searchBarContainer}>
+                <Icon name="search" size={20} color="#FFFFFF" style={styles.searchIcon} />
+                <TextInput
+                  style={styles.searchBar}
+                  placeholder="Search for anything about health ..."
+                  placeholderTextColor="#FFFFFF"
+                  value={searchText}
+                  onChangeText={handleSearchChange}
+                  onFocus={handleSearchBarFocus}
+                  onBlur={handleSearchBarBlur}
+                />
+              </TouchableOpacity>
+              {isSuggestionsVisible && (
+                <View style={styles.suggestionsContainer}>
+                  {suggestions.map((suggestion, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.suggestionItem}
+                      onPress={() => handleSuggestionClick(suggestion)}
+                      
+                    >
+                      <Text style={styles.suggestionText}>{suggestion}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
+            </BlurView>
 
+            
           <FlatList
             horizontal
             data={data}
@@ -122,18 +258,20 @@ const HomeScreen = () => {
           <TouchableOpacity style={styles.seeAllButton}>
             <Text style={styles.seeAllText}>See All</Text>
           </TouchableOpacity>
-
+          
           <FlatList
-            horizontal
-            data={data1}
-            renderItem={({ item }) => (
-              <View style={styles.rectangle}>
-                <Image source={{ uri: item.imageUri }} style={styles.rectangleImage} />
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.rectangleList}
-          />
+        horizontal
+        data={data2}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleDoctorPress(item.id)}>
+            <View style={styles.rectangle}>
+              <Image source={{ uri: item.profile_img }} style={styles.rectangleImage} />
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.rectangleList}
+      />
 
           <View style={styles.textImageContainer}>
             <Text style={styles.text1}>
@@ -340,6 +478,21 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 10,
     resizeMode: 'contain',
+  },
+  suggestionsContainer: {
+    marginTop: 1,
+    backgroundColor: 'rgba(0, 31, 63, 0.8)',
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    position: 'relative',
+  },
+  suggestionItem: {
+    paddingVertical: 8,
+  },
+  suggestionText: {
+    color: '#FFFFFF',
+    fontSize: 16,
   },
 });
 

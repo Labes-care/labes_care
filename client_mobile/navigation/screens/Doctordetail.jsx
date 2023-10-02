@@ -6,18 +6,79 @@ import { BlurView } from 'expo-blur';
 import { useAuth } from 'client_mobile/AuthContext.js'
 import axios from 'axios'
 
-const DoctorDetailsScreen = ({ route }) => {
+const DoctorDetailsScreen = ({ route, isAppointmentSet }) => {
   const { patientId } = useAuth();
-  console.log('patientId from home',patientId)
+  console.log('patientId from home', patientId);
+
   const { doctorId } = route.params;
-  console.log('patientId from detail',patientId)
+  console.log('patientId from detail', patientId);
   console.log('doctor ID:', doctorId);
+
+  const { doctorIdd } = route.params;
+  console.log('doctorIdd frommm', doctorIdd);
+
+  const finalDoctorId = doctorId === 'doctor_id' ? doctorIdd : doctorId;
+
+  console.log('final doctor:', finalDoctorId);
+
+  const [successNotificationVisible, setSuccessNotificationVisible] = useState(false);
+
+  useEffect(() => {
+    console.log('isAppointmentSet:', isAppointmentSet); // Check if the prop is received correctly
+  }, [isAppointmentSet]);
+
+
+  useEffect(() => {
+    if (successNotificationVisible) {
+      const timer = setTimeout(() => {
+        setSuccessNotificationVisible(false);
+      }, 5000); // Hide after 3 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [successNotificationVisible]);
+
+
+
+
+  const handleConfirmAppointment = () => {
+    if (!selectedDate || !selectedTimeSlot) {
+      return;
+    }
+
+    const appointmentData = {
+      doctors_iddoctors: finalDoctorId,
+      patients_idpatients: patientId,
+      date: selectedDate,
+      time: selectedTimeSlot.slice(0,-3),
+      status: 0, 
+      message: message,
+      checked: 0, 
+    };
+
+    console.log('appointmentData',appointmentData)
+
+    axios
+      .post('http://192.168.30.250:3003/relationships', appointmentData)
+      .then(response => {
+        console.log('Appointment created:', response.data);
+        setModalVisible(false); 
+        setSuccessNotificationVisible(true); 
+        
+
+      })
+      .catch(error => {
+        console.error('Error creating appointment:', error);
+      });
+  };
+
+
 
   const [doctorDataa, setDoctorData] = useState([])
 
   useEffect(() => {
     axios
-      .get(`http://192.168.30.250:3003/doctors/${doctorId}`) 
+      .get(`http://192.168.30.250:3003/doctors/${finalDoctorId}`) 
       .then(response => {
         const fetchedDoctorData = response.data;
         setDoctorData(fetchedDoctorData);
@@ -25,7 +86,7 @@ const DoctorDetailsScreen = ({ route }) => {
       .catch(error => {
         console.error('Error fetching doctor details:', error);
       });
-  }, [doctorId]);
+  }, [finalDoctorId]);
 
   console.log(doctorDataa)
 
@@ -74,6 +135,20 @@ const DoctorDetailsScreen = ({ route }) => {
 
   return (
     <LinearGradient colors={['#001F3F', '#000000']} style={styles.container}>
+ {/* Success Notification */}
+
+ {successNotificationVisible && (
+        <View style={styles.successNotification}>
+          <View style={styles.successNotificationContent}>
+            <Image
+              source={require('./ok.gif')}
+              style={styles.successImage}
+            />
+            <Text style={styles.successText}>Appointment set successfully  !</Text>
+          </View>
+        </View>
+      )}
+
       <Image source={{ uri: doctorData.coverPhoto }} style={styles.coverPhoto} />
 
       <View style={styles.profileContainer}>
@@ -189,7 +264,7 @@ const DoctorDetailsScreen = ({ route }) => {
               ))}
             </View>
 
-            <TouchableOpacity style={styles.confirmButton} onPress={() => setModalVisible(false)}>
+            <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmAppointment} >
               <Text style={styles.confirmButtonText}>Confirm Appointment</Text>
             </TouchableOpacity>
           </View>
@@ -363,6 +438,36 @@ const styles = StyleSheet.create({
   selectedSuggestionText: {
     color: 'white',
   },
+  successNotification: {
+    position: 'absolute',
+    top: 40,
+    left: 35,
+    right: 20,
+    backgroundColor: 'green',
+    borderRadius: 150,
+    borderWidth: 1,
+    borderColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    zIndex: 1000,
+    width :314,
+    height: 42,
+  },
+  successNotificationContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  successImage: {
+    width: 90,
+    height: 90,
+    marginRight: 10,
+  },
+  successText: {
+    color: 'white',
+    fontWeight: 'bold',
+    right : 19
+  }
 });
 
 export default DoctorDetailsScreen;

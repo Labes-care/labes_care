@@ -80,7 +80,6 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -90,37 +89,44 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 180,
   },
   gif: {
     width: 9999,
     height: 499,
     resizeMode: 'contain',
-    marginTop : -130,
-
+    marginTop: -130,
   },
   gifText: {
     fontSize: 50,
     color: 'white',
-    marginTop : -140,
-    marginBottom : -100,
-    marginRight : 130,
+    marginTop: -140,
+    marginBottom: -110,
+    marginRight: 130,
+    zIndex : 999
   },
   loginContainer: {
-    flex: 2,
+    position: 'fixed', // Use fixed position to make the container stay fixed
+    top: 10, // Place it at the top of the screen
+    left: 0, // Place it at the left of the screen
+    right: 0, // Place it at the right of the screen
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 30,
     borderRadius: 10,
-    marginBottom : -135,
-
+    marginBottom: 40,
+    marginleft : 500,
+    bottom: 60,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Add a background color with some transparency
+    zIndex: 1, // Ensure the container is above other elements
   },
   loginText: {
     fontSize: 20,
     marginBottom: 20,
     color: 'white',
-    marginBottom : 5,    
-    marginRight : 250,
-
+    marginBottom: 200,
+    marginRight: 250,
+    top : 200
   },
   input: {
     borderWidth: 1,
